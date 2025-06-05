@@ -1,0 +1,143 @@
+<!--
+  파일 경로 예시: src/main/resources/static/login.html
+  이 파일을 열면 이메일/비밀번호를 입력하고 /api/auth/login 으로 POST 요청이 날아갑니다.
+-->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 로그인</title>
+    <style>
+        /* 아주 간단한 CSS 예시 */
+        body {
+            background-color: #f2f3f5;
+            font-family: "Noto Sans KR", sans-serif;
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 320px;
+        }
+        .login-container h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        .login-container label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            margin-top: 1rem;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .login-container button {
+            width: 100%;
+            margin-top: 1.5rem;
+            padding: 0.6rem;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: #c0392b;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h2>관리자 로그인</h2>
+    <!--
+      Spring Security 기본 파라미터는 name="username" 과 name="password" 입니다.
+      만약 email 파라미터를 사용하려면 SecurityConfig 에서 form.usernameParameter("email") 설정이 필요합니다.
+    -->
+    <form id="loginForm" action="/api/auth/login" method="post">
+        <label for="username">이메일</label>
+        <input
+                type="email"
+                id="username"
+                name="username"
+                placeholder="admin@example.com"
+                required
+        />
+
+        <label for="password">비밀번호</label>
+        <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="••••••••"
+                required
+        />
+
+        <button type="submit">로그인</button>
+        <div class="error-message" id="errorMessage">로그인에 실패했습니다. 이메일/비밀번호를 확인해주세요.</div>
+    </form>
+</div>
+
+<script>
+    // (선택) AJAX 기반으로 로그인 처리하고 싶은 경우 간단한 예시
+    // 스프링 시큐리티가 JSON 리턴을 한다면 fetch로 처리하고 index.html로 redirect 시켜줄 수 있습니다.
+    // 아래 코드는 form submit 자체를 가로채서 fetch 요청을 보내는 예시입니다.
+    (function () {
+        const form = document.getElementById("loginForm");
+        const errorDiv = document.getElementById("errorMessage");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); // 기본 폼 전송 막기
+
+            const formData = new FormData(form);
+            const payload = new URLSearchParams();
+            formData.forEach((value, key) => {
+                payload.append(key, value);
+            });
+
+            fetch("/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: payload.toString(),
+                credentials: "include", // 세션쿠키를 주고받기 위해
+            })
+                .then((res) => {
+                    if (res.ok) {
+                        // 로그인 성공 시
+                        window.location.href = "/index.html";
+                    } else {
+                        // 로그인 실패 (401 또는 403 등)
+                        errorDiv.style.display = "block";
+                    }
+                })
+                .catch((err) => {
+                    console.error(err);
+                    errorDiv.style.display = "block";
+                });
+        });
+    })();
+</script>
+</body>
+</html>
