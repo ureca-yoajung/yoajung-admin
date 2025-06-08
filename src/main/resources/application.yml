@@ -2,6 +2,12 @@ spring:
   application:
     name: yoajung-admin
 
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: always
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${MYSQL_URL}
