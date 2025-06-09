@@ -32,4 +32,11 @@ public class PlanController {
 
         return ResponseEntity.ok(ApiResponse.of(PLAN_LIST_SUCCESS, listPlanResponse));
     }
+
+    @DeleteMapping("/{planId}")
+    public ResponseEntity<ApiResponse<?>> removePlan(@PathVariable("planId") Long planId) {
+        planService.deletePlan(planId);
+
+        return ResponseEntity.ok(ApiResponse.ok(PLAN_DELETE_SUCCESS));
+    }
 }

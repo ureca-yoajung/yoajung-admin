@@ -18,6 +18,8 @@ public enum BaseCode {
     PLAN_LIST_SUCCESS("READ_PLAN_LIST_200", HttpStatus.OK, "요금제 목록 조회에 성공했습니다."),
     PLAN_NOT_FOUND("NOT_FOUND_PLAN_404", HttpStatus.NOT_FOUND, "해당 요금제를 찾을 수 없습니다."),
     PLAN_CREATE_SUCCESS("CREATE_PLAN_201", HttpStatus.CREATED, "요금제 생성에 성공했습니다."),
+    PLAN_UPDATE_SUCCESS("UPDATE_PLAN_200", HttpStatus.OK,   "요금제 수정에 성공했습니다."),
+    PLAN_DELETE_SUCCESS("DELETE_PLAN_200", HttpStatus.OK,   "요금제 삭제에 성공했습니다."),
 
     // Review
     REVIEW_CREATE_SUCCESS("CREATE_REVIEW_201", HttpStatus.CREATED, "리뷰 생성에 성공했습니다."),

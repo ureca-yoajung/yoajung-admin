@@ -6,4 +6,5 @@ import com.ureca.yoajungadmin.plan.service.response.ListPlanResponse;
 public interface PlanService {
     Long createPlan(CreatePlanRequest createPlanRequest);
     ListPlanResponse getPlanList(Integer pageNumber, Integer pageSize);
+    void deletePlan(Long planId);
 }

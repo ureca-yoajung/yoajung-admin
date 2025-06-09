@@ -117,4 +117,9 @@ public class PlanServiceImpl implements PlanService {
                 .totalElements(planPage.getTotalElements())
                 .build();
     }
+
+    @Override
+    public void deletePlan(Long planId) {
+        planRepository.deleteById(planId);
+    }
 }
