@@ -78,8 +78,8 @@
         <label for="username">이메일</label>
         <input
                 type="email"
-                id="username"
-                name="username"
+                id="email"
+                name="email"
                 placeholder="admin@example.com"
                 required
         />
@@ -99,45 +99,51 @@
 </div>
 
 <script>
-    // (선택) AJAX 기반으로 로그인 처리하고 싶은 경우 간단한 예시
-    // 스프링 시큐리티가 JSON 리턴을 한다면 fetch로 처리하고 index.html로 redirect 시켜줄 수 있습니다.
-    // 아래 코드는 form submit 자체를 가로채서 fetch 요청을 보내는 예시입니다.
-    (function () {
-        const form = document.getElementById("loginForm");
-        const errorDiv = document.getElementById("errorMessage");
+    // 이미 로그인된 사용자는 루트로 리다이렉트
+    (async () => {
+      try {
+        const res = await fetch('/api/auth/status', {
+          method: 'GET',
+          credentials: 'include'
+        });
 
-        form.addEventListener("submit", function (e) {
-            e.preventDefault(); // 기본 폼 전송 막기
+        if (res.headers.get("content-type")?.includes("application/json")) {
+            const result = await res.json();
+            if (result.code === 'STATUS_AUTHENTICATED_200') {
+                window.location.href = '/';
+            }
+        }
+      } catch (e) {
+        console.error('Status check failed', e);
+      }
+    })();
+    const form = document.getElementById("loginForm");
+    const errorDiv = document.getElementById("errorMessage");
 
-            const formData = new FormData(form);
-            const payload = new URLSearchParams();
-            formData.forEach((value, key) => {
-                payload.append(key, value);
+    form.addEventListener("submit", async e => {
+        e.preventDefault();
+        const payload = {
+            email: form.email.value,
+            password: form.password.value
+        };
+
+        try {
+            const res = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify(payload)
             });
 
-            fetch("/api/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: payload.toString(),
-                credentials: "include", // 세션쿠키를 주고받기 위해
-            })
-                .then((res) => {
-                    if (res.ok) {
-                        // 로그인 성공 시
-                        window.location.href = "/index.html";
-                    } else {
-                        // 로그인 실패 (401 또는 403 등)
-                        errorDiv.style.display = "block";
-                    }
-                })
-                .catch((err) => {
-                    console.error(err);
-                    errorDiv.style.display = "block";
-                });
-        });
-    })();
+            if (res.ok) {
+                window.location.href = "/";
+            } else {
+                errorDiv.style.display = "block";
+            }
+        } catch {
+            errorDiv.style.display = "block";
+        }
+    });
 </script>
 </body>
 </html>

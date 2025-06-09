@@ -13,6 +13,7 @@ public enum BaseCode {
     STATUS_AUTHENTICATED("STATUS_AUTHENTICATED_200", HttpStatus.OK, "로그인된 사용자입니다."),
     STATUS_UNAUTHORIZED("STATUS_UNAUTHORIZED_401", HttpStatus.UNAUTHORIZED, "로그인이 필요합니다."),
 
+
     // Auth
     AUTH_SUCCESS("AUTH_SUCCESS_200", HttpStatus.OK, "로그인에 성공했습니다."),
     AUTH_FAILURE("AUTH_FAILURE_401", HttpStatus.UNAUTHORIZED, "아이디 또는 비밀번호가 올바르지 않습니다."),
