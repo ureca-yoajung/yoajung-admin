@@ -1,8 +1,11 @@
 package com.ureca.yoajungadmin.plan.service.impl;
 
+import com.ureca.yoajungadmin.common.BaseCode;
 import com.ureca.yoajungadmin.plan.controller.request.CreatePlanRequest;
+import com.ureca.yoajungadmin.plan.controller.request.UpdatePlanRequest;
 import com.ureca.yoajungadmin.plan.entity.*;
 import com.ureca.yoajungadmin.plan.exception.BenefitNotFoundException;
+import com.ureca.yoajungadmin.plan.exception.PlanNotFoundException;
 import com.ureca.yoajungadmin.plan.exception.ProductNotFoundException;
 import com.ureca.yoajungadmin.plan.repository.*;
 import com.ureca.yoajungadmin.plan.service.PlanService;
@@ -119,7 +122,52 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
+    public PlanResponse getPlan(Long planId) {
+        Plan plan = planRepository.findById(planId).orElseThrow(() -> new PlanNotFoundException(BaseCode.PLAN_NOT_FOUND));
+
+        List<Product> products = planProductRepository.findByPlan(plan).stream()
+                .map(PlanProduct::getProduct)
+                .toList();
+
+        List<Benefit> benefits = planBenefitRepository.findByPlan(plan).stream()
+                .map(PlanBenefit::getBenefit)
+                .toList();
+
+        return PlanResponse.from(plan, products, benefits);
+    }
+
+    @Override
     public void deletePlan(Long planId) {
         planRepository.deleteById(planId);
+    }
+
+    @Override
+    public void updatePlan(Long planId, UpdatePlanRequest updatePlanRequest) {
+        Plan plan = planRepository.findById(planId)
+                .orElseThrow(() -> new PlanNotFoundException(BaseCode.PLAN_NOT_FOUND));
+
+        plan.update(
+                updatePlanRequest.getName(),
+                updatePlanRequest.getNetworkType(),
+                updatePlanRequest.getPlanCategory(),
+                updatePlanRequest.getBasePrice(),
+                updatePlanRequest.getDataAllowance(),
+                updatePlanRequest.getTetheringSharingAllowance(),
+                updatePlanRequest.getSpeedAfterLimit(),
+                updatePlanRequest.getDescription()
+        );
+
+        plan.getPlanBenefits().clear();
+        plan.getPlanProducts().clear();
+
+        List<Benefit> benefits = benefitRepository.findAllById(updatePlanRequest.getBenefitIds());
+        for (Benefit benefit : benefits) {
+            plan.addBenefit(PlanBenefit.builder().benefit(benefit).build());
+        }
+
+        List<Product> products = productRepository.findAllById(updatePlanRequest.getServiceIds());
+        for (Product product : products) {
+            plan.addProduct(PlanProduct.builder().product(product).build());
+        }
     }
 }
