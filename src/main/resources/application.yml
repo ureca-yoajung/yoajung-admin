@@ -24,3 +24,8 @@ spring:
         format_sql: true
 
     open-in-view: false
+
+logging:
+  level:
+    org.hibernate.SQL: debug             # 실행되는 SQL 로그
+    org.hibernate.type.descriptor.sql: trace   # 바인딩된 파라미터 값도 출력됨
