@@ -29,7 +29,15 @@ public enum BaseCode {
     USER_NOT_FOUND("NOT_FOUND_USER_404", HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다."),
 
     // Chat
-    CHAT_SAVE_SUCCESS("SAVE_CHAT_201", HttpStatus.CREATED, "채팅 저장에 성공했습니다.");
+    CHAT_SAVE_SUCCESS("SAVE_CHAT_201", HttpStatus.CREATED, "채팅 저장에 성공했습니다."),
+
+    // Product
+    PRODUCT_CREATE_SUCCESS("CREATE_PRODUCT_201", HttpStatus.CREATED, "서비스 생성에 성공했습니다."),
+    PRODUCT_UPDATE_SUCCESS("UPDATE_PRODUCT_200", HttpStatus.OK, "서비스 수정에 성공했습니다."),
+    PRODUCT_DELETE_SUCCESS("DELETE_PRODUCT_200", HttpStatus.OK, "서비스 삭제에 성공했습니다."),
+    PRODUCT_LIST_SUCCESS("READ_PRODUCT_LIST_200", HttpStatus.OK, "서비스 목록 조회에 성공했습니다."),
+    PRODUCT_DETAIL_SUCCESS("FIND_PRODUCT_DETAIL_200", HttpStatus.OK, "서비스 상세 조회에 성공했습니다."),
+    PRODUCT_NOT_FOUND("NOT_FOUND_PRODUCT_404", HttpStatus.NOT_FOUND, "해당 서비스를 찾을 수 없습니다.");
 
     private final String code;
     private final HttpStatus status;

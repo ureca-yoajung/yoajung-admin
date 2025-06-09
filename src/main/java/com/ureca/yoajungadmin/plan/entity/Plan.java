@@ -2,6 +2,8 @@ package com.ureca.yoajungadmin.plan.entity;
 
 
 import com.ureca.yoajungadmin.common.BaseTimeEntity;
+import com.ureca.yoajungadmin.plan.entity.enums.NetworkType;
+import com.ureca.yoajungadmin.plan.entity.enums.PlanCategory;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

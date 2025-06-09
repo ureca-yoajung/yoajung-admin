@@ -66,7 +66,7 @@ public class ChatSchedule {
         jobLauncher.run(jobRegistry.getJob("weeklyMessageUserJob"), jobParameters);
     }
 
-        @Scheduled(cron = "0 * * * * *", zone = "Asia/Seoul")
+//    @Scheduled(cron = "0 * * * * *", zone = "Asia/Seoul")
     public void runMonthlyMessage() throws Exception {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = dateFormat.format(new Date());
@@ -78,7 +78,7 @@ public class ChatSchedule {
         jobLauncher.run(jobRegistry.getJob("monthlyMessageJob"), jobParameters);
     }
 
-        @Scheduled(cron = "0 * * * * *", zone = "Asia/Seoul")
+//    @Scheduled(cron = "0 * * * * *", zone = "Asia/Seoul")
     public void runMonthlyMessageUser() throws Exception {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = dateFormat.format(new Date());
