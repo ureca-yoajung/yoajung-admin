@@ -13,6 +13,13 @@ public enum BaseCode {
     STATUS_AUTHENTICATED("STATUS_AUTHENTICATED_200", HttpStatus.OK, "로그인된 사용자입니다."),
     STATUS_UNAUTHORIZED("STATUS_UNAUTHORIZED_401", HttpStatus.UNAUTHORIZED, "로그인이 필요합니다."),
 
+    // Auth
+    AUTH_SUCCESS("AUTH_SUCCESS_200", HttpStatus.OK, "로그인에 성공했습니다."),
+    AUTH_FAILURE("AUTH_FAILURE_401", HttpStatus.UNAUTHORIZED, "아이디 또는 비밀번호가 올바르지 않습니다."),
+    AUTH_REQUIRED("AUTH_REQUIRED_401", HttpStatus.UNAUTHORIZED, "로그인이 필요합니다."),
+    ACCESS_FORBIDDEN("ACCESS_FORBIDDEN_403", HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
+    LOGOUT_SUCCESS("LOGOUT_SUCCESS_200", HttpStatus.OK, "로그아웃에 성공했습니다."),
+
     // Plan
     PLAN_DETAIL_SUCCESS("FIND_PLAN_DETAIL_200", HttpStatus.OK, "요금제 상세 조회에 성공했습니다."),
     PLAN_LIST_SUCCESS("READ_PLAN_LIST_200", HttpStatus.OK, "요금제 목록 조회에 성공했습니다."),
