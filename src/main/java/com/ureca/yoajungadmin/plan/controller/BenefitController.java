@@ -3,6 +3,7 @@ package com.ureca.yoajungadmin.plan.controller;
 import com.ureca.yoajungadmin.common.ApiResponse;
 import com.ureca.yoajungadmin.plan.controller.request.CreateBenefitRequest;
 import com.ureca.yoajungadmin.plan.controller.request.UpdateBenefitRequest;
+import com.ureca.yoajungadmin.plan.entity.enums.BenefitType;
 import com.ureca.yoajungadmin.plan.service.BenefitService;
 import com.ureca.yoajungadmin.plan.service.response.BenefitResponse;
 import com.ureca.yoajungadmin.plan.service.response.ListBenefitResponse;
@@ -18,6 +19,12 @@ import static com.ureca.yoajungadmin.common.BaseCode.*;
 public class BenefitController {
 
     private final BenefitService benefitService;
+
+    @GetMapping("/enums/benefit-types")
+    public ResponseEntity<ApiResponse<BenefitType[]>> getBenefitTypeList() {
+        return ResponseEntity
+                .ok(ApiResponse.of(BENEFIT_TYPE_LIST_SUCCESS, BenefitType.values()));
+    }
 
     @PostMapping
     public ResponseEntity<ApiResponse<?>> createBenefit(@RequestBody CreateBenefitRequest createBenefitRequest) {
