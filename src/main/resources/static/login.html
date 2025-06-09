@@ -117,33 +117,7 @@
         console.error('Status check failed', e);
       }
     })();
-    const form = document.getElementById("loginForm");
-    const errorDiv = document.getElementById("errorMessage");
 
-    form.addEventListener("submit", async e => {
-        e.preventDefault();
-        const payload = {
-            email: form.email.value,
-            password: form.password.value
-        };
-
-        try {
-            const res = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-                body: JSON.stringify(payload)
-            });
-
-            if (res.ok) {
-                window.location.href = "/";
-            } else {
-                errorDiv.style.display = "block";
-            }
-        } catch {
-            errorDiv.style.display = "block";
-        }
-    });
 </script>
 </body>
 </html>
