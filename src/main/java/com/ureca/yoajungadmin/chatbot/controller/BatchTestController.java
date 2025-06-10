@@ -32,7 +32,7 @@ public class BatchTestController {
                 .toJobParameters();
 
 
-        jobLauncher.run(jobRegistry.getJob("dailyMessageUserJob"), jobParameters);
+        jobLauncher.run(jobRegistry.getJob("dailyMessageJob"), jobParameters);
 
 
         return "ok";
