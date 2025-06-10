@@ -96,4 +96,18 @@ public class Plan extends BaseTimeEntity {
             planProducts.forEach(this::addProduct);
         }
     }
+
+    public void update(String name, NetworkType networkType,
+                       PlanCategory planCategory, Integer basePrice,
+                       Integer dataAllowance, Integer tetheringSharingAllowance,
+                       Integer speedAfterLimit, String description) {
+        this.name = name;
+        this.networkType = networkType;
+        this.planCategory = planCategory;
+        this.basePrice = basePrice;
+        this.dataAllowance = dataAllowance;
+        this.tetheringSharingAllowance = tetheringSharingAllowance;
+        this.speedAfterLimit = speedAfterLimit;
+        this.description = description;
+    }
 }
