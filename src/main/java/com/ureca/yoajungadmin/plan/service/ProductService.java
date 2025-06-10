@@ -1,0 +1,15 @@
+package com.ureca.yoajungadmin.plan.service;
+
+import com.ureca.yoajungadmin.plan.controller.request.CreateProductRequest;
+import com.ureca.yoajungadmin.plan.controller.request.UpdateProductRequest;
+import com.ureca.yoajungadmin.plan.service.response.ListProductResponse;
+import com.ureca.yoajungadmin.plan.service.response.ProductResponse;
+
+public interface ProductService {
+
+    Long createProduct(CreateProductRequest createProductRequest);
+    ProductResponse getProduct(Long productId);
+    ListProductResponse getProductList();
+    void updateProduct(Long productId, UpdateProductRequest updateProductRequest);
+    void deleteProduct(Long productId);
+}

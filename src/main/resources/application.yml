@@ -2,6 +2,12 @@ spring:
   application:
     name: yoajung-admin
 
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: always
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${MYSQL_URL}
@@ -10,9 +16,11 @@ spring:
 
   jpa:
     show-sql: true
+    open-in-view: false
     hibernate:
       ddl-auto: update
-    open-in-view: false
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         format_sql: true

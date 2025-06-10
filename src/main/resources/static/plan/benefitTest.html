@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Benefit CRUD 테스트</title>
+</head>
+<body>
+<h1>Benefit CRUD 테스트</h1>
+
+<!-- ENUM 불러오기 -->
+<section>
+    <h2>Load Benefit Types</h2>
+    <button onclick="loadBenefitTypes()">Load Enum</button>
+    <pre id="enum-result"></pre>
+</section>
+
+<!-- CREATE -->
+<section>
+    <h2>Create Benefit</h2>
+    <select id="create-benefitType"></select><br/>
+    <input id="create-name"        placeholder="name" /><br/>
+    <input id="create-desc"        placeholder="description" /><br/>
+    <input id="create-voice"       placeholder="voiceLimit" type="number" /><br/>
+    <input id="create-sms"         placeholder="smsLimit"    type="number" /><br/>
+    <input id="create-discount"    placeholder="discountAmount" type="number" /><br/>
+    <button onclick="createBenefit()">Create</button>
+    <pre id="create-result"></pre>
+</section>
+
+<!-- READ ALL -->
+<section>
+    <h2>List Benefits</h2>
+    <button onclick="listBenefits()">Refresh List</button>
+    <pre id="list-result"></pre>
+</section>
+
+<!-- READ ONE -->
+<section>
+    <h2>Get Benefit</h2>
+    <input type="number" id="get-id" placeholder="benefitId" />
+    <button onclick="getBenefit()">Get</button>
+    <pre id="get-result"></pre>
+</section>
+
+<!-- UPDATE -->
+<section>
+    <h2>Update Benefit</h2>
+    <input type="number" id="upd-id"          placeholder="benefitId" />
+    <button onclick="loadBenefitForUpdate()">Load</button><br/>
+    <select id="upd-benefitType"></select><br/>
+    <input        id="upd-name"        placeholder="name" /><br/>
+    <input        id="upd-desc"        placeholder="description" /><br/>
+    <input        id="upd-voice"       placeholder="voiceLimit" type="number" /><br/>
+    <input        id="upd-sms"         placeholder="smsLimit"    type="number" /><br/>
+    <input        id="upd-discount"    placeholder="discountAmount" type="number" /><br/>
+    <button onclick="updateBenefit()">Update</button>
+    <pre id="upd-result"></pre>
+</section>
+
+<!-- DELETE -->
+<section>
+    <h2>Delete Benefit</h2>
+    <input type="number" id="del-id" placeholder="benefitId" />
+    <button onclick="deleteBenefit()">Delete</button>
+    <pre id="del-result"></pre>
+</section>
+
+<script>
+    const baseUrl = '/benefits';
+
+    async function loadBenefitTypes() {
+        const res = await fetch(`${baseUrl}/enums/benefit-types`);
+        const json = await res.json();
+        const types = json.data || [];
+        const opts = types.map(t => `<option value="${t}">${t}</option>`).join('');
+        document.getElementById('create-benefitType').innerHTML = opts;
+        document.getElementById('upd-benefitType').innerHTML    = opts;
+        document.getElementById('enum-result').textContent      = JSON.stringify(json, null, 2);
+    }
+
+    async function createBenefit() {
+        const body = {
+            benefitType:    document.getElementById('create-benefitType').value,
+            name:           document.getElementById('create-name').value,
+            description:    document.getElementById('create-desc').value,
+            voiceLimit:     parseInt(document.getElementById('create-voice').value)  || null,
+            smsLimit:       parseInt(document.getElementById('create-sms').value)    || null,
+            discountAmount: parseInt(document.getElementById('create-discount').value) || null
+        };
+        const res = await fetch(baseUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        document.getElementById('create-result').textContent = await res.text();
+    }
+
+    // READ ALL
+    async function listBenefits() {
+        const res = await fetch(baseUrl);
+        const json = await res.json();
+        document.getElementById('list-result').textContent = JSON.stringify(json, null, 2);
+    }
+
+    // READ ONE
+    async function getBenefit() {
+        const id = document.getElementById('get-id').value;
+        const res = await fetch(`${baseUrl}/${id}`);
+        const json = await res.json();
+        document.getElementById('get-result').textContent = JSON.stringify(json, null, 2);
+    }
+
+    // LOAD FOR UPDATE
+    async function loadBenefitForUpdate() {
+        const id = document.getElementById('upd-id').value;
+        if (!id) return alert('먼저 benefitId를 입력하세요.');
+
+        const res  = await fetch(`${baseUrl}/${id}`);
+        const json = await res.json();
+        const b = json.data;
+
+        document.getElementById('upd-benefitType').value   = b.benefitType;
+        document.getElementById('upd-name').value          = b.name;
+        document.getElementById('upd-desc').value          = b.description;
+        document.getElementById('upd-voice').value         = b.voiceLimit   ?? '';
+        document.getElementById('upd-sms').value           = b.smsLimit     ?? '';
+        document.getElementById('upd-discount').value      = b.discountAmount ?? '';
+    }
+
+    // UPDATE
+    async function updateBenefit() {
+        const id = document.getElementById('upd-id').value;
+        const body = {
+            benefitType:    document.getElementById('upd-benefitType').value,
+            name:           document.getElementById('upd-name').value,
+            description:    document.getElementById('upd-desc').value,
+            voiceLimit:     parseInt(document.getElementById('upd-voice').value)  || null,
+            smsLimit:       parseInt(document.getElementById('upd-sms').value)    || null,
+            discountAmount: parseInt(document.getElementById('upd-discount').value) || null
+        };
+        const res = await fetch(`${baseUrl}/${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        document.getElementById('upd-result').textContent = await res.text();
+    }
+
+    // DELETE
+    async function deleteBenefit() {
+        const id = document.getElementById('del-id').value;
+        const res = await fetch(`${baseUrl}/${id}`, { method: 'DELETE' });
+        document.getElementById('del-result').textContent = await res.text();
+    }
+
+    // 페이지 로드 시 ENUM 먼저 로드
+    window.addEventListener('DOMContentLoaded', loadBenefitTypes);
+</script>
+</body>
+</html>
