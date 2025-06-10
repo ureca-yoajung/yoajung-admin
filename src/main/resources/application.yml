@@ -15,6 +15,8 @@ spring:
     password: ${MYSQL_PASSWORD}
 
   jpa:
+    show-sql: true
+    open-in-view: false
     hibernate:
       ddl-auto: update
       naming:
@@ -22,5 +24,3 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-    open-in-view: false
