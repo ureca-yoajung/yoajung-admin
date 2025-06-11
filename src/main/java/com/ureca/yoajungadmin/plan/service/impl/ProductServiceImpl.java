@@ -27,10 +27,10 @@ public class ProductServiceImpl implements ProductService {
     public Long createProduct(CreateProductRequest createProductRequest) {
         Product product = Product.builder()
                 .name(createProductRequest.getName())
-                .serviceType(createProductRequest.getServiceType())
-                .serviceCategory(createProductRequest.getServiceCategory())
+                .productType(createProductRequest.getProductType())
+                .productCategory(createProductRequest.getProductCategory())
                 .description(createProductRequest.getDescription())
-                .serviceImage("")
+                .productImage("")
                 .build();
 
         productRepository.save(product);
@@ -65,10 +65,10 @@ public class ProductServiceImpl implements ProductService {
 
         product.update(
                 updateProductRequest.getName(),
-                updateProductRequest.getServiceType(),
-                updateProductRequest.getServiceCategory(),
+                updateProductRequest.getProductType(),
+                updateProductRequest.getProductCategory(),
                 updateProductRequest.getDescription(),
-                updateProductRequest.getServiceImage()
+                updateProductRequest.getProductImage()
         );
     }
 

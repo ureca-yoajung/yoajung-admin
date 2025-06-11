@@ -1,5 +1,5 @@
 package com.ureca.yoajungadmin.plan.entity.enums;
 
-public enum ServiceCategory {
+public enum ProductCategory {
     MEDIA, PREMIUM
 }
