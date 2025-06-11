@@ -41,6 +41,7 @@ public enum BaseCode {
 
     // Chat
     CHAT_SAVE_SUCCESS("SAVE_CHAT_201", HttpStatus.CREATED, "채팅 저장에 성공했습니다."),
+    CHAT_STATISTICS_READ_SUCCESS("READ_CHAT_STATISTICS_200", HttpStatus.OK, "챗봇 통계 조회에 성공했습니다."),
 
     // Product
     PRODUCT_CREATE_SUCCESS("CREATE_PRODUCT_201", HttpStatus.CREATED, "서비스 생성에 성공했습니다."),

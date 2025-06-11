@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>챗봇 통계 대시보드</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        h1 { text-align: center; }
+        .chart-container { display: flex; flex-wrap: wrap; justify-content: center; }
+        .chart-box { width: 45%; min-width: 300px; margin: 20px; }
+        canvas { width:100% !important; height:300px !important; }
+    </style>
+</head>
+<body>
+<h1>챗봇 통계</h1>
+<div class="chart-container">
+    <div class="chart-box"><canvas id="dailyActiveUsersChart"></canvas></div>
+    <div class="chart-box"><canvas id="weeklyActiveUsersChart"></canvas></div>
+    <div class="chart-box"><canvas id="monthlyActiveUsersChart"></canvas></div>
+    <div class="chart-box"><canvas id="dailyMessagesChart"></canvas></div>
+    <div class="chart-box"><canvas id="weeklyMessagesChart"></canvas></div>
+    <div class="chart-box"><canvas id="monthlyMessagesChart"></canvas></div>
+</div>
+
+<script>
+    function renderChart(canvasId, label, stats) {
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: stats.map(x => x.statDate),
+                datasets: [{
+                    label: label,
+                    data: stats.map(x => x.value),
+                    fill: false,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                scales: { y: { beginAtZero: true } },
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: label }
+                }
+            }
+        });
+    }
+
+    async function fetchAndDraw() {
+        try {
+            const res = await fetch('/chat-statistics');
+            if (!res.ok) {
+                alert(`HTTP 오류 발생: ${res.status}`);
+                return;
+            }
+
+            const json = await res.json();
+            console.log('API 응답:', json);
+
+            const { code, message, data } = json;
+
+
+            renderChart('dailyActiveUsersChart',    '일간 활성 사용자 수',    data.dailyActiveUsers);
+            renderChart('weeklyActiveUsersChart',   '주간 활성 사용자 수',    data.weeklyActiveUsers);
+            renderChart('monthlyActiveUsersChart',  '월간 활성 사용자 수',    data.monthlyActiveUsers);
+            renderChart('dailyMessagesChart',       '일간 메시지 수',        data.dailyMessageCounts);
+            renderChart('weeklyMessagesChart',      '주간 메시지 수',        data.weeklyMessageCounts);
+            renderChart('monthlyMessagesChart',     '월간 메시지 수',        data.monthlyMessageCounts);
+
+        } catch (err) {
+            console.error(err);
+            alert(`차트 렌더링 중 오류: ${err.message}`);
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', fetchAndDraw);
+</script>
+</body>
+</html>
