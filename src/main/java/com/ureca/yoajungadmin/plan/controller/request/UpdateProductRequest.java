@@ -1,15 +1,15 @@
 package com.ureca.yoajungadmin.plan.controller.request;
 
-import com.ureca.yoajungadmin.plan.entity.enums.ServiceCategory;
-import com.ureca.yoajungadmin.plan.entity.enums.ServiceType;
+import com.ureca.yoajungadmin.plan.entity.enums.ProductCategory;
+import com.ureca.yoajungadmin.plan.entity.enums.ProductType;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
 public class UpdateProductRequest {
     private String name;
-    private ServiceType serviceType;
-    private ServiceCategory serviceCategory;
+    private ProductType productType;
+    private ProductCategory productCategory;
     private String description;
-    private String serviceImage;
+    private String productImage;
 }

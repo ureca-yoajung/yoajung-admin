@@ -1,8 +1,8 @@
 package com.ureca.yoajungadmin.plan.entity;
 
 import com.ureca.yoajungadmin.common.BaseTimeEntity;
-import com.ureca.yoajungadmin.plan.entity.enums.ServiceCategory;
-import com.ureca.yoajungadmin.plan.entity.enums.ServiceType;
+import com.ureca.yoajungadmin.plan.entity.enums.ProductCategory;
+import com.ureca.yoajungadmin.plan.entity.enums.ProductType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,32 +23,32 @@ public class Product extends BaseTimeEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ServiceType serviceType;
+    private ProductType productType;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ServiceCategory serviceCategory;
+    private ProductCategory productCategory;
 
     @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
-    private String serviceImage;
+    private String productImage;
 
     @Builder
-    private Product(String name, ServiceType serviceType, ServiceCategory serviceCategory, String description, String serviceImage) {
+    private Product(String name, ProductType productType, ProductCategory productCategory, String description, String productImage) {
         this.name = name;
-        this.serviceType = serviceType;
-        this.serviceCategory = serviceCategory;
+        this.productType = productType;
+        this.productCategory = productCategory;
         this.description = description;
-        this.serviceImage = serviceImage;
+        this.productImage = productImage;
     }
 
-    public void update(String name, ServiceType serviceType, ServiceCategory serviceCategory, String description, String serviceImage) {
+    public void update(String name, ProductType productType, ProductCategory productCategory, String description, String productImage) {
         this.name = name;
-        this.serviceType = serviceType;
-        this.serviceCategory = serviceCategory;
+        this.productType = productType;
+        this.productCategory = productCategory;
         this.description = description;
-        this.serviceImage = serviceImage;
+        this.productImage = productImage;
     }
 }

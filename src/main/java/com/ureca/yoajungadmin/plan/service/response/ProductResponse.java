@@ -1,8 +1,8 @@
 package com.ureca.yoajungadmin.plan.service.response;
 
 import com.ureca.yoajungadmin.plan.entity.Product;
-import com.ureca.yoajungadmin.plan.entity.enums.ServiceCategory;
-import com.ureca.yoajungadmin.plan.entity.enums.ServiceType;
+import com.ureca.yoajungadmin.plan.entity.enums.ProductCategory;
+import com.ureca.yoajungadmin.plan.entity.enums.ProductType;
 import lombok.*;
 
 @Getter
@@ -11,19 +11,19 @@ import lombok.*;
 public class ProductResponse {
     private Long id;
     private String name;
-    private ServiceType serviceType;
-    private ServiceCategory serviceCategory;
+    private ProductType productType;
+    private ProductCategory productCategory;
     private String description;
-    private String serviceImage;
+    private String productImage;
 
     public static ProductResponse from(Product product) {
         return ProductResponse.builder()
                 .id(product.getId())
                 .name(product.getName())
-                .serviceType(product.getServiceType())
-                .serviceCategory(product.getServiceCategory())
+                .productType(product.getProductType())
+                .productCategory(product.getProductCategory())
                 .description(product.getDescription())
-                .serviceImage(product.getServiceImage())
+                .productImage(product.getProductImage())
                 .build();
     }
 }
