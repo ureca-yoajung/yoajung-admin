@@ -11,28 +11,31 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@Table(name="product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product extends BaseTimeEntity {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(nullable = false)
+
+    @Column(name="productType", nullable = false)
     @Enumerated(EnumType.STRING)
     private ProductType productType;
 
-    @Column(nullable = false)
+    @Column(name="productCategory", nullable = false)
     @Enumerated(EnumType.STRING)
     private ProductCategory productCategory;
 
-    @Column(nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(nullable = false)
+    @Column(name="productImage", nullable = false)
     private String productImage;
 
     @Builder

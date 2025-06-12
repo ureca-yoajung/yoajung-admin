@@ -11,25 +11,27 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@Table(name = "planStatistic")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlanStatistic extends BaseTimeEntity {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "ageGroup", nullable = false)
     private AgeGroup ageGroup;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "planCategory", nullable = false)
     private PlanCategory planCategory;
 
-    @Column(nullable = false)
+    @Column(name = "planId",nullable = false)
     private Long planId;
 
-    @Column(nullable = false)
+    @Column(name = "userCount", nullable = false)
     private Long userCount;
 
     @Builder

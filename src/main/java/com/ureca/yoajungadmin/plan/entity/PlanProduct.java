@@ -9,17 +9,21 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@Table(name="planProduct")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlanProduct extends BaseTimeEntity {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "planId", nullable = false)
     private Plan plan;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "productId", nullable = false)
     private Product product;
 
     @Builder
