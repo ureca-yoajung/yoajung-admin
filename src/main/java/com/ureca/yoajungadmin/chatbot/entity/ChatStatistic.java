@@ -11,18 +11,23 @@ import java.time.LocalDate;
 
 @Getter
 @Entity
+@Table(name = "chatStatistic")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatStatistic extends BaseTimeEntity {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "statDate")
     private LocalDate statDate;
 
+    @Column(name = "chatStatType")
     @Enumerated(EnumType.STRING)
     private ChatStatType chatStatType;
 
+    @Column(name = "value")
     private Long value;
 
     @Builder

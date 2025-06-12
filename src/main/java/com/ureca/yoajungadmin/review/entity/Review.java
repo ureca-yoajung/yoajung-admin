@@ -12,29 +12,31 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@Table(name = "review")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends BaseTimeEntity {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "userId", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "plan_id", nullable = false)
+    @JoinColumn(name = "planId", nullable = false)
     private Plan plan;
 
-    @Column(nullable = false, columnDefinition = "TINYINT")
+    @Column(name = "star", nullable = false, columnDefinition = "TINYINT")
     private int star;
 
     @Lob
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Column(nullable = false)
+    @Column(name = "isDeleted", nullable = false)
     private boolean isDeleted;
 
 

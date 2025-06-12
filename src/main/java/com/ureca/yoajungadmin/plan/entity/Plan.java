@@ -18,42 +18,44 @@ import java.util.List;
 
 @Getter
 @Entity
+@Table(name="plan")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SQLDelete(sql = "UPDATE Plan SET deletedAt = NOW() WHERE id = ?")
 @SQLRestriction("deletedAt is NULL")
 public class Plan extends BaseTimeEntity {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name="networkType", nullable = false)
     @Enumerated(EnumType.STRING)
     private NetworkType networkType;
 
-    @Column(nullable = false)
+    @Column(name="planCategory", nullable = false)
     @Enumerated(EnumType.STRING)
     private PlanCategory planCategory;
 
-    @Column(nullable = false)
+    @Column(name="basePrice", nullable = false)
     private Integer basePrice;
 
-    @Column(nullable = false)
+    @Column(name="dataAllowance", nullable = false)
     private Integer dataAllowance;
 
-    @Column(nullable = false)
+    @Column(name="tetheringSharingAllowance", nullable = false)
     private Integer tetheringSharingAllowance;
 
-    @Column(nullable = false)
+    @Column(name="speedAfterLimit", nullable = false)
     private Integer speedAfterLimit;
 
-    @Column(nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column
+    @Column(name = "deletedAt")
     private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
