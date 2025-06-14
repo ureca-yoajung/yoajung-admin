@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 목록</title>
+    <link rel="stylesheet" href="/product/css/productList.css">
+</head>
+<body>
+<nav class="admin-navbar">
+    <div class="admin-navbar__container">
+        <div class="admin-navbar__logo">Admin</div>
+        <ul class="admin-navbar__menu">
+            <li><a href="/plan/planList.html">요금제</a></li>
+            <li><a href="/chat/chatStatistics.html">채팅 통계</a></li>
+            <li><a href="/benefit/benefitList.html">혜택</a></li>
+            <li><a href="/product/productList.html">상품</a></li>
+            <li><a href="/review">리뷰</a></li>
+        </ul>
+    </div>
+</nav>
+
+<h1>상품 목록</h1>
+<div class="top-actions">
+    <button class="btn btn-primary" onclick="openProductModal()">+ 상품 등록</button>
+</div>
+
+<table id="productTable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>이름</th>
+        <th>유형</th>
+        <th>카테고리</th>
+        <th>설명</th>
+        <th>이미지</th>
+        <th>관리</th>
+    </tr>
+    </thead>
+    <tbody id="productTableBody"></tbody>
+</table>
+
+<!-- 등록 모달 -->
+<div class="modal-backdrop" id="createProductModal">
+    <div class="modal">
+        <h2>상품 등록</h2>
+        <label>이름</label>
+        <input type="text" id="productName">
+        <label>유형</label>
+        <select id="productTypeSelect"></select>
+        <label>카테고리</label>
+        <select id="productCategorySelect"></select>
+        <label>설명</label>
+        <input type="text" id="productDescription">
+        <label>이미지 URL</label>
+        <input type="text" id="productImage">
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="submitProduct()">등록</button>
+            <button class="btn btn-ghost" onclick="closeProductModal()">닫기</button>
+        </div>
+    </div>
+</div>
+
+<!-- 수정 모달 -->
+<div class="modal-backdrop" id="editProductModal">
+    <div class="modal">
+        <h2>상품 수정</h2>
+        <label>이름</label>
+        <input type="text" id="editProductName">
+        <label>유형</label>
+        <select id="editProductTypeSelect"></select>
+        <label>카테고리</label>
+        <select id="editProductCategorySelect"></select>
+        <label>설명</label>
+        <input type="text" id="editProductDescription">
+        <label>이미지 URL</label>
+        <input type="text" id="editProductImage">
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="submitEditProduct()">수정</button>
+            <button class="btn btn-ghost" onclick="closeEditProductModal()">닫기</button>
+        </div>
+    </div>
+</div>
+
+<script src="/product/js/productList.js"></script>
+</body>
+</html>

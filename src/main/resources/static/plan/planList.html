@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>요금제 목록</title>
+    <link rel="stylesheet" href="/plan/css/planList.css">
+</head>
+<body>
+<nav class="admin-navbar">
+    <div class="admin-navbar__container">
+        <div class="admin-navbar__logo">Admin</div>
+        <ul class="admin-navbar__menu">
+            <li><a href="/plan/planList.html">요금제</a></li>
+            <li><a href="/chat/chatStatistics.html">채팅 통계</a></li>
+            <li><a href="/benefit/benefitList.html">혜택</a></li>
+            <li><a href="/product/productList.html">상품</a></li>
+            <li><a href="/review">리뷰</a></li>
+        </ul>
+    </div>
+</nav>
+
+<h1>요금제 목록</h1>
+<div class="top-actions">
+    <button class="btn btn-primary" onclick="openPlanModal()">+ 요금제 등록</button>
+</div>
+
+<table id="planTable">
+    <thead>
+    <tr>
+        <th>ID</th><th>이름</th><th>망 종류</th><th>카테고리</th>
+        <th>기본 요금</th><th>데이터</th><th>테더링</th><th>속도제한</th>
+        <th>설명</th><th>혜택</th><th>상품</th><th>관리</th>
+    </tr>
+    </thead>
+    <tbody id="planTableBody"></tbody>
+</table>
+
+<div class="pagination" id="pagination"></div>
+
+<!-- 생성 모달 -->
+<div class="modal-backdrop" id="createPlanModal">
+    <div class="modal">
+        <h2>요금제 등록</h2>
+        <label>이름</label><input type="text" id="planName">
+        <label>망 종류</label>
+        <select id="networkTypeSelect">
+            <option value="LTE">LTE</option>
+            <option value="FIVE_G">FIVE_G</option>
+        </select>
+        <label>카테고리</label>
+        <select id="planCategorySelect">
+            <option value="LTE_FIVE_G">LTE_FIVE_G</option>
+            <option value="ONLINE_ONLY">ONLINE_ONLY</option>
+        </select>
+        <label>기본 요금</label><input type="number" id="planBasePrice">
+        <label>데이터</label><input type="number" id="planData">
+        <label>테더링</label><input type="number" id="planTethering">
+        <label>속도제한</label><input type="number" id="planSpeedLimit">
+        <label>설명</label><input type="text" id="planDescription">
+        <label>혜택</label><select id="benefitSelect" multiple size="5"></select>
+        <label>상품</label><select id="productSelect" multiple size="5"></select>
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="submitPlan()">등록</button>
+            <button class="btn btn-ghost" onclick="closePlanModal()">닫기</button>
+        </div>
+    </div>
+</div>
+
+<!-- 수정 모달 -->
+<div class="modal-backdrop" id="editPlanModal">
+    <div class="modal">
+        <h2>요금제 수정</h2>
+        <input type="hidden" id="editPlanId">
+        <label>이름</label><input type="text" id="editPlanName">
+        <label>망 종류</label>
+        <select id="editNetworkTypeSelect">
+            <option value="LTE">LTE</option>
+            <option value="FIVE_G">FIVE_G</option>
+        </select>
+        <label>카테고리</label>
+        <select id="editPlanCategorySelect">
+            <option value="LTE_FIVE_G">LTE_FIVE_G</option>
+            <option value="ONLINE_ONLY">ONLINE_ONLY</option>
+        </select>
+        <label>기본 요금</label><input type="number" id="editPlanBasePrice">
+        <label>데이터</label><input type="number" id="editPlanData">
+        <label>테더링</label><input type="number" id="editPlanTethering">
+        <label>속도제한</label><input type="number" id="editPlanSpeedLimit">
+        <label>설명</label><input type="text" id="editPlanDescription">
+        <label>혜택</label><select id="editBenefitSelect" multiple size="5"></select>
+        <label>상품</label><select id="editProductSelect" multiple size="5"></select>
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="submitEditPlan()">수정</button>
+            <button class="btn btn-ghost" onclick="closeEditModal()">닫기</button>
+        </div>
+    </div>
+</div>
+
+<script src="/plan/js/planList.js"></script>
+</body>
+</html>
