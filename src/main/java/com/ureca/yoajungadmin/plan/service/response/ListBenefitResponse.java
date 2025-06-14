@@ -9,4 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ListBenefitResponse {
     private List<BenefitResponse> benefitResponseList;
+    private Integer pageNumber;
+    private Integer pageSize;
+    private Long totalElements;
 }
