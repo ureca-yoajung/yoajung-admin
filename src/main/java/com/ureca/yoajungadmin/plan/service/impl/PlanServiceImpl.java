@@ -76,7 +76,7 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     public ListPlanResponse getPlanList(Integer pageNumber, Integer pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by("lastModifiedDate").descending());
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by("id").descending());
 
         Page<Plan> planPage = planRepository.findAll(pageRequest);
         List<Plan> plans = planPage.getContent();

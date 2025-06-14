@@ -1,0 +1,144 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 0 2rem;
+}
+h1 {
+    margin-top: 2rem;
+}
+.top-actions {
+    margin: 1rem 0;
+    text-align: right;
+}
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+.btn-ghost {
+    background-color: transparent;
+    color: #555;
+    border: 1px solid #ccc;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+thead {
+    background-color: #f2f2f2;
+}
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-backdrop.show {
+    display: flex;
+}
+.modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    min-width: 400px;
+}
+.modal input, .modal select {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+.modal-buttons {
+    text-align: right;
+}
+.admin-navbar {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+    padding: 12px 0;
+    font-family: 'Inter', sans-serif;
+}
+.admin-navbar__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.admin-navbar__logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e6007e;
+    white-space: nowrap;
+}
+.admin-navbar__menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.admin-navbar__menu li a {
+    text-decoration: none;
+    font-size: 15px;
+    color: #333;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+}
+.admin-navbar__menu li a:hover {
+    color: #e6007e;
+}
+@media (max-width: 768px) {
+    .admin-navbar__container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .admin-navbar__menu {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+    gap: 6px;
+}
+.pagination button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+.pagination button:hover {
+    background-color: #d4d4d4;
+}
+.pagination .btn-active {
+    background-color: #007bff;
+    color: white;
+}
