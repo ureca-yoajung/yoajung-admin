@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
                 .productType(createProductRequest.getProductType())
                 .productCategory(createProductRequest.getProductCategory())
                 .description(createProductRequest.getDescription())
-                .productImage("")
+                .productImage(createProductRequest.getProductImage())
                 .build();
 
         productRepository.save(product);
