@@ -28,6 +28,9 @@ public enum BaseCode {
     PLAN_CREATE_SUCCESS("CREATE_PLAN_201", HttpStatus.CREATED, "요금제 생성에 성공했습니다."),
     PLAN_UPDATE_SUCCESS("UPDATE_PLAN_200", HttpStatus.OK,   "요금제 수정에 성공했습니다."),
     PLAN_DELETE_SUCCESS("DELETE_PLAN_200", HttpStatus.OK,   "요금제 삭제에 성공했습니다."),
+    PLAN_STATISTICS_READ_SUCCESS("READ_PLAN_STATISTICS_200", HttpStatus.OK, "요금제 통계 조회에 성공했습니다."),
+    PLAN_STATISTICS_NOT_FOUND("NOT_FOUND_PLAN_STATISTICS_404", HttpStatus.NOT_FOUND, "요금제 통계를 찾을 수 없습니다."),
+
 
     // Review
     REVIEW_CREATE_SUCCESS("CREATE_REVIEW_201", HttpStatus.CREATED, "리뷰 생성에 성공했습니다."),
