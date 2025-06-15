@@ -7,6 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface ReviewRepositoryCustom {
     Page<ReviewListResponse> findReviewList(Long planId, Pageable pageable);
-    Page<ReviewListResponse> findReviewAllList(Pageable pageable);
     Double avgStar(Long planId);
 }

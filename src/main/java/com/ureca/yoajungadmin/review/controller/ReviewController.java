@@ -1,7 +1,6 @@
 package com.ureca.yoajungadmin.review.controller;
 
 import com.ureca.yoajungadmin.common.ApiResponse;
-import com.ureca.yoajungadmin.review.dto.ReviewAllPageResponse;
 import com.ureca.yoajungadmin.review.dto.ReviewDeleteResponse;
 import com.ureca.yoajungadmin.review.dto.ReviewPageResponse;
 import com.ureca.yoajungadmin.review.service.ReviewService;
@@ -33,9 +32,9 @@ public class ReviewController {
 
     // 전체 리뷰 조회
     @GetMapping
-    public ResponseEntity<ApiResponse<ReviewAllPageResponse>> listReview(Pageable pageable) {
+    public ResponseEntity<ApiResponse<ReviewPageResponse>> listReview(Pageable pageable) {
 
-        ReviewAllPageResponse response = reviewService.reviewAllList(pageable);
+        ReviewPageResponse response = reviewService.reviewAllList(pageable);
 
         return ResponseEntity.status(STATUS_OK.getStatus())
                 .body(ApiResponse.of(STATUS_OK, response));

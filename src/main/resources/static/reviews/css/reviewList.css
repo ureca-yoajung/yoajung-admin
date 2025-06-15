@@ -1,0 +1,496 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 0 2rem;
+    background-color: #f8f9fa;
+}
+
+h1 {
+    margin-top: 2rem;
+}
+
+.reviews-container {
+    margin-top: 1rem;
+}
+
+.review-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.review-header,
+.review-footer,
+.rating-with-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.review-header .user-info .user-meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    /*font-size: 14px;*/
+    /*color: #333;*/
+}
+
+.review-date {
+    font-size: 12px;
+    color: #888;
+}
+
+.rating .stars .star {
+    font-size: 16px;
+    color: #ffc107;
+}
+
+.rating .stars .empty {
+    color: #ccc;
+}
+
+.rating-text {
+    font-size: 13px;
+    color: #555;
+    margin-left: 0.5rem;
+}
+
+.review-content {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.review-content.collapsed {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-ghost {
+    background-color: transparent;
+    color: #555;
+    border: 1px solid #ccc;
+}
+
+.like-btn.liked {
+    background-color: #e0e0e0;
+    color: #000;
+}
+
+.custom-select {
+    position: relative;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.selected-option {
+    padding: 8px;
+    position: relative;
+}
+
+/* ▼ 아이콘 추가 */
+.selected-option::after {
+    content: "▼";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #555;
+    pointer-events: none;
+}
+.dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.dropdown-options div {
+    padding: 8px;
+    font-size: 14px;
+}
+
+.dropdown-options div:hover {
+    background-color: #f2f2f2;
+}
+
+.review-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 12px 16px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 6px;
+}
+
+.pagination button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.pagination button:hover {
+    background-color: #d4d4d4;
+}
+
+.pagination .btn-active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* 모달 */
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-backdrop.show {
+    display: flex;
+}
+.modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    min-width: 400px;
+    max-width: 600px;
+    width: 100%;
+}
+.modal input,
+.modal textarea,
+.modal select {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.modal-buttons {
+    text-align: right;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+/* 별점 */
+.star-rating {
+    display: flex;
+    gap: 5px;
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+.star-rating .selected,
+.star-rating .hovered {
+    color: #ffc107;
+}
+
+
+
+
+
+.admin-navbar {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+    padding: 12px 0;
+    font-family: 'Inter', sans-serif;
+}
+.admin-navbar__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.admin-navbar__logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e6007e;
+    white-space: nowrap;
+}
+.admin-navbar__menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.admin-navbar__menu li a {
+    text-decoration: none;
+    font-size: 15px;
+    color: #333;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+}
+.admin-navbar__menu li a:hover {
+    color: #e6007e;
+}
+@media (max-width: 768px) {
+    .admin-navbar__container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .admin-navbar__menu {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+}
+
+
+
+
+.custom-select {
+    position: relative;
+    width: 250px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+.selected-option {
+    padding: 8px;
+    background: white;
+}
+.dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+}
+.dropdown-options div {
+    padding: 8px;
+}
+.dropdown-options div:hover {
+    background: #f0f0f0;
+}
+
+
+.delete-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+
+.delete-btn:hover {
+    background: #fca5a5;
+}
+
+.review-actions {
+    display: flex;
+    gap: 8px;
+    padding-top: 12px;
+}
+
+
+
+.plan-name {
+    font-weight: bold;
+    font-size: 14px;
+    color: #e6007e;
+    margin-bottom: 0.5rem;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.review-date {
+    font-size: 12px;
+    color: #888;
+}
+
+.review-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.review-rating .stars .star {
+    font-size: 16px;
+    color: #ffc107;
+}
+
+.review-rating .stars .empty {
+    color: #ccc;
+}
+
+.rating-text {
+    font-size: 13px;
+    color: #555;
+}
+
+
+
+.stat-cards {
+    display: flex;
+    gap: 16px;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+.stat-card {
+    flex: 1;
+    min-width: 250px;
+    background: white;
+    padding: 1rem 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.stat-title {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 4px;
+}
+.stat-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+#selected-plan-title {
+    font-size: 16px;
+    color: #666;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+}
+.top-actions {
+    margin: 2rem 0 1rem;
+}
+.review-header .user-info {
+    flex-direction: column;
+    align-items: flex-start;
+}
+.review-header .plan-name {
+    font-weight: bold;
+    font-size: 14px;
+    color: #e6007e;
+}
+.helpful-btn {
+    border: none !important;
+    background: none;
+    cursor: default;
+    pointer-events: none;
+    color: #999;
+    display: flex;
+    gap: 4px;
+    transition: color 0.2s;
+    align-items: center;
+    padding-left: 0;
+}
+.review-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* 통계 영역을 카드처럼 감싸기 */
+#stats-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+/* 각 통계 박스를 카드처럼 보이게 */
+#stats-container > div {
+    flex: 1;
+    min-width: 160px;
+    text-align: center;
+}
+
+/* 라벨과 값 스타일 구분 */
+#stats-container span:first-child {
+    display: block;
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+}
+
+#stats-container span:last-child {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #1f2937;
+}
