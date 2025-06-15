@@ -1,14 +1,26 @@
+/*body {*/
+/*    font-family: 'Noto Sans KR', sans-serif;*/
+/*    margin: 0;*/
+/*    padding: 0 2rem;*/
+/*    background-color: #f8f9fa;*/
+/*}*/
+
+/*h1 {*/
+/*    margin-top: 2rem;*/
+/*}*/
+
+
 body {
-    font-family: 'Noto Sans KR', sans-serif;
-    margin: 0;
-    padding: 0 2rem;
-    background-color: #f8f9fa;
+    font-family: 'Inter', sans-serif;
+    background-color: #f9f9f9;
+    padding: 40px;
 }
 
 h1 {
-    margin-top: 2rem;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
 }
-
 .reviews-container {
     margin-top: 1rem;
 }
@@ -176,12 +188,8 @@ h1 {
     transition: background-color 0.2s;
 }
 
-.pagination button:hover {
-    background-color: #d4d4d4;
-}
-
-.pagination .btn-active {
-    background-color: #007bff;
+.pagination .active {
+    background-color: #888;
     color: white;
 }
 
@@ -334,13 +342,13 @@ h1 {
     font-size: 13px;
     cursor: pointer;
     transition: all 0.2s;
-    background: #fee2e2;
-    color: #dc2626;
+    background-color: #e6007e;
+    color: white;
 }
 
 
 .delete-btn:hover {
-    background: #fca5a5;
+    background: #c00068;
 }
 
 .review-actions {
