@@ -34,11 +34,16 @@ public class ReviewServiceImpl implements ReviewService {
 
     // 전체 리뷰 조회
     @Override
-    public ReviewAllPageResponse reviewAllList(Pageable pageable) {
+    public ReviewPageResponse reviewAllList(Pageable pageable) {
 
-        Page<ReviewListResponse> reviewAllList = reviewRepository.findReviewAllList(pageable);
+        Page<ReviewListResponse> reviewList = reviewRepository.findReviewList(null, pageable);
+        Double avgStar = reviewRepository.avgStar(null);
 
-        return new ReviewAllPageResponse(reviewAllList);
+        if(avgStar == null){
+            avgStar = 0.0;
+        }
+
+        return new ReviewPageResponse(reviewList, avgStar);
     }
 
     // 리뷰 삭제

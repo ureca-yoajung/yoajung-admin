@@ -19,4 +19,5 @@ public class ReviewListResponse {
     private int star;
     private Long likeCnt;
     private LocalDateTime createDate;
+    private String planName;
 }
