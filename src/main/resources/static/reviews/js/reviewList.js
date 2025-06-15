@@ -1,69 +1,14 @@
 const planId = 1; // 실제로는 서버에서 주입하거나 URL에서 추출
 
-let currentPlanPage = 1;
 const pageSize = 5;
-let lastPlanPage = false;
-let currentPlanId = "all"; // 'all' 또는 숫자 planId
+let currentPlanId = "all";
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     loadPlanOptions(); // 첫 로딩
-//
-//     const select = document.getElementById('plan-select');
-//     select.addEventListener('change', (e) => {
-//         const value = e.target.value;
-//
-//         if (value === 'load-more') {
-//             // 다시 이전 선택 유지
-//             e.target.selectedIndex = 0;
-//             loadPlanOptions(true);
-//             return;
-//         }
-//
-//         // ✅ 선택된 요금제로 리뷰 조회
-//         currentPlanId = value;
-//         loadReviews(0);
-//     });
-// });
-// async function loadPlanOptions(append = false) {
-//     if (lastPlanPage || currentPlanPage < 0) return;
-//
-//     try {
-//         const res = await fetch(`/plans?pageNumber=${currentPlanPage}&pageSize=${pageSize}`);
-//         const result = await res.json();
-//         const responseData = result.data;
-//
-//         const plans = responseData.planResponseList;
-//         const totalElements = responseData.totalElements;
-//
-//         const select = document.getElementById('plan-select');
-//
-//         // "더보기..." 제거
-//         const moreOption = select.querySelector('option[value="load-more"]');
-//         if (moreOption) moreOption.remove();
-//
-//         plans.forEach(plan => {
-//             const option = document.createElement('option');
-//             option.value = plan.id;
-//             option.textContent = plan.name;
-//             select.appendChild(option);
-//         });
-//
-//         // 마지막 페이지 계산 (직접)
-//         const totalLoaded = (currentPlanPage + 1) * pageSize;
-//         if (totalLoaded >= totalElements) {
-//             lastPlanPage = true;
-//         } else {
-//             const more = document.createElement('option');
-//             more.value = 'load-more';
-//             more.textContent = '더보기...';
-//             select.appendChild(more);
-//             currentPlanPage++;
-//         }
-//
-//     } catch (e) {
-//         console.error("요금제 불러오기 실패:", e);
-//     }
-// }
+const dropdownPageSize = 20;
+let dropdownLastPage = false;
+let isAllOptionAdded = false; // "전체 보기" 중복 생성 방지용
+
+let dropdownPlanPage = 1;
+let totalLoadedPlans = 0; // 누적 로딩 수
 
 document.addEventListener('DOMContentLoaded', () => {
     const selected = document.getElementById('selected-plan');
@@ -84,14 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadPlanOptionsToDropdown(); // 초기 로딩
 });
 
-
-const dropdownPageSize = 20;
-let dropdownLastPage = false;
-let isAllOptionAdded = false; // "전체 보기" 중복 생성 방지용
-
-
-let dropdownPlanPage = 1;
-let totalLoadedPlans = 0; // 누적 로딩 수
 
 async function loadPlanOptionsToDropdown() {
     if (dropdownLastPage) return;
@@ -162,8 +99,6 @@ async function loadPlanOptionsToDropdown() {
 }
 
 
-
-
 // 리뷰 조회
 async function loadReviews(page = 0) {
     try {
@@ -206,8 +141,6 @@ async function loadReviews(page = 0) {
 }
 
 
-
-
 // 리뷰 삭제
 async function deleteReview(reviewId) {
     try {
@@ -230,7 +163,6 @@ async function deleteReview(reviewId) {
         alert("리뷰 삭제에 실패했습니다.");
     }
 }
-
 
 
 
