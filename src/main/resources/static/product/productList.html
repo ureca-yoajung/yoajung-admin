@@ -11,6 +11,7 @@
         <div class="admin-navbar__logo">Admin</div>
         <ul class="admin-navbar__menu">
             <li><a href="/plan/planList.html">요금제</a></li>
+            <li><a href="/plan/planStatistics.html">요금제 통계</a></li>
             <li><a href="/chat/chatStatistics.html">채팅 통계</a></li>
             <li><a href="/benefit/benefitList.html">혜택</a></li>
             <li><a href="/product/productList.html">상품</a></li>
@@ -38,6 +39,8 @@
     </thead>
     <tbody id="productTableBody"></tbody>
 </table>
+
+<div id="pagination" class="pagination"></div>
 
 <!-- 등록 모달 -->
 <div class="modal-backdrop" id="createProductModal">

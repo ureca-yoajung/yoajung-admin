@@ -1,54 +1,97 @@
 let editingProductId = null;
 
+const pageSize = 20;
+let currentPage = 1;
+let totalPages = 0;
+
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('/products')
+    loadProducts(currentPage);
+});
+
+function loadProducts(pageNumber) {
+    if (totalPages > 0) {
+        pageNumber = Math.max(1, Math.min(pageNumber, totalPages));
+    }
+    fetch(`/products?pageNumber=${pageNumber}&pageSize=${pageSize}`)
         .then(res => res.json())
         .then(data => {
-            const list = data.data.productResponseList;
-            const tbody = document.getElementById('productTableBody');
-            list.forEach(p => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${p.id}</td>
-                    <td>${p.name}</td>
-                    <td>${p.productType}</td>
-                    <td>${p.productCategory}</td>
-                    <td>${p.description}</td>
-                    <td>${p.productImage}</td>
-                    <td>
-                        <button class="btn btn-primary" onclick="editProduct(${p.id})">수정</button>
-                        <button class="btn btn-ghost" onclick="deleteProduct(${p.id}, this)">삭제</button>
-                    </td>`;
-                tbody.appendChild(row);
-            });
-        });
-});
+            const { productResponseList, pageNumber: serverPage, totalElements } = data.data;
+            currentPage = serverPage;
+            totalPages = Math.ceil(totalElements / pageSize);
+
+            renderTable(productResponseList);
+            renderPagination();
+        })
+        .catch(() => alert('상품 데이터를 불러오는 중 오류 발생'));
+}
+
+function renderTable(list) {
+    const tbody = document.getElementById('productTableBody');
+    tbody.innerHTML = '';
+    list.forEach(p => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${p.id}</td>
+            <td>${p.name}</td>
+            <td>${p.productType}</td>
+            <td>${p.productCategory}</td>
+            <td>${p.description}</td>
+            <td>${p.productImage}</td>
+            <td>
+                <button class="btn btn-primary" onclick="editProduct(${p.id})">수정</button>
+                <button class="btn btn-ghost" onclick="deleteProduct(${p.id})">삭제</button>
+            </td>`;
+        tbody.appendChild(row);
+    });
+}
+
+function renderPagination() {
+    const container = document.getElementById('pagination');
+    container.innerHTML = '';
+
+    const prev = document.createElement('button');
+    prev.textContent = '‹';
+    prev.disabled = currentPage === 1;
+    prev.onclick = () => loadProducts(currentPage - 1);
+    container.appendChild(prev);
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.classList.toggle('btn-active', i === currentPage);
+        btn.onclick = () => loadProducts(i);
+        container.appendChild(btn);
+    }
+
+    const next = document.createElement('button');
+    next.textContent = '›';
+    next.disabled = currentPage >= totalPages;
+    next.onclick = () => loadProducts(currentPage + 1);
+    container.appendChild(next);
+}
 
 function openProductModal() {
     document.getElementById('createProductModal').style.display = 'flex';
     loadEnums('productTypeSelect', '/products/enums/service-types');
     loadEnums('productCategorySelect', '/products/enums/service-categories');
 }
-
 function closeProductModal() {
     document.getElementById('createProductModal').style.display = 'none';
 }
-
 function loadEnums(selectId, url) {
     fetch(url)
         .then(res => res.json())
         .then(data => {
-            const select = document.getElementById(selectId);
-            select.innerHTML = '';
-            data.data.forEach(type => {
-                const option = document.createElement('option');
-                option.value = type;
-                option.textContent = type;
-                select.appendChild(option);
+            const sel = document.getElementById(selectId);
+            sel.innerHTML = '';
+            data.data.forEach(v => {
+                const o = document.createElement('option');
+                o.value = v;
+                o.textContent = v;
+                sel.appendChild(o);
             });
         });
 }
-
 function submitProduct() {
     const payload = {
         name: document.getElementById('productName').value,
@@ -65,7 +108,7 @@ function submitProduct() {
         if (res.ok) {
             alert('등록되었습니다!');
             closeProductModal();
-            location.reload();
+            loadProducts(currentPage);
         } else {
             alert('등록에 실패했습니다.');
         }
@@ -90,12 +133,10 @@ function editProduct(id) {
             document.getElementById('editProductModal').style.display = 'flex';
         });
 }
-
 function closeEditProductModal() {
     document.getElementById('editProductModal').style.display = 'none';
     editingProductId = null;
 }
-
 function submitEditProduct() {
     const payload = {
         name: document.getElementById('editProductName').value,
@@ -112,23 +153,21 @@ function submitEditProduct() {
         if (res.ok) {
             alert('수정되었습니다!');
             closeEditProductModal();
-            location.reload();
+            loadProducts(currentPage);
         } else {
             alert('수정에 실패했습니다.');
         }
     });
 }
 
-function deleteProduct(id, btn) {
+function deleteProduct(id) {
     if (!confirm(`ID ${id} 상품을 삭제하시겠습니까?`)) return;
-    fetch(`/products/${id}`, {
-        method: 'DELETE'
-    }).then(res => {
-        if (res.ok) {
-            const row = btn.closest('tr');
-            row.remove();
-        } else {
-            alert('삭제에 실패했습니다.');
-        }
-    });
+    fetch(`/products/${id}`, { method: 'DELETE' })
+        .then(res => {
+            if (res.ok) {
+                loadProducts(currentPage);
+            } else {
+                alert('삭제에 실패했습니다.');
+            }
+        });
 }

@@ -35,9 +35,10 @@ public class BenefitController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<ListBenefitResponse>> getBenefitList() {
+    public ResponseEntity<ApiResponse<ListBenefitResponse>> getBenefitList(@RequestParam(name = "pageNumber", defaultValue = "1") Integer pageNumber,
+                                                                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
         return ResponseEntity.ok(
-                ApiResponse.of(BENEFIT_LIST_SUCCESS, benefitService.getBenefitList()));
+                ApiResponse.of(BENEFIT_LIST_SUCCESS, benefitService.getBenefitList(pageNumber - 1, pageSize)));
     }
 
     @GetMapping("/{benefitId}")
