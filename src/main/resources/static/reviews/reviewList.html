@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>리뷰 목록</title>
+  <link rel="stylesheet" href="/reviews/css/reviewList.css">
+  <style>
+
+
+  </style>
+</head>
+<body>
+<nav class="admin-navbar">
+  <div class="admin-navbar__container">
+    <div class="admin-navbar__logo">Admin</div>
+    <ul class="admin-navbar__menu">
+      <li><a href="/plan/planList.html">요금제</a></li>
+      <li><a href="/chat/chatStatistics.html">채팅 통계</a></li>
+      <li><a href="/benefit/benefitList.html">혜택</a></li>
+      <li><a href="/product/productList.html">상품</a></li>
+      <li><a href="/reviews/reviewList.html">리뷰</a></li>
+    </ul>
+  </div>
+</nav>
+
+<h1>리뷰 목록</h1>
+<div id="selected-plan-title"></div>
+
+<div id="stats-container">
+<div class="stat-cards">
+  <div class="stat-card">
+    <div class="stat-title">리뷰 수</div>
+    <div class="stat-value">✏️<span id="total-review">0 개</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-title">평균 평점</div>
+    <div class="stat-value">⭐ <span id="avg-stars">0.0</span></div>
+  </div>
+</div>
+</div>
+
+<div class="top-actions">
+  <div class="custom-select">
+    <div class="selected-option" id="selected-plan">요금제 선택</div>
+    <div class="dropdown-options" id="plan-options" style="display: none;"></div>
+  </div>
+</div>
+
+<div class="reviews-container" id="reviews-container"></div>
+
+
+<template id="review-template">
+  <div class="review-item">
+
+    <!-- 요금제 이름 -->
+    <div class="plan-name">요금제 이름</div>
+
+    <!-- 작성자 및 별점 -->
+    <div class="review-header">
+      <div class="user-info">
+        <div class="user-meta">
+        <h4 class="username">작성자</h4>
+        <span class="review-date">날짜</span>
+          </div>
+      </div>
+      <div class="review-rating">
+        <div class="stars"></div>
+        <span class="rating-text">4점</span>
+      </div>
+    </div>
+
+    <!-- 내용 -->
+    <div class="review-content">리뷰 내용</div>
+
+    <!-- 도움됨 & 삭제 -->
+    <div class="review-footer">
+      <button class="helpful-btn">👍 도움됨 <span class="like-count">0</span></button>
+      <div class="review-actions">
+        <button class="delete-btn">삭제</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<div class="pagination" id="pagination-buttons"></div>
+
+
+<script src="/reviews/js/reviewList.js"></script>
+
+</body>
+</html>
