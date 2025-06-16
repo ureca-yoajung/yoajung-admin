@@ -9,11 +9,37 @@
 /*    margin-top: 2rem;*/
 /*}*/
 
+:root {
+    --primary: #e6007e;
+    --primary-dark: #d10070;
+    --primary-light: #ff7a8a;
+    --gradient: linear-gradient(135deg, #e6007e 0%, #ff7a8a 100%);
+    --text-primary: #1a1a1a;
+    --text-secondary: #64748b;
+    --bg-gray: #fafafa;
+    --bg-white: #ffffff;
+    --border-color: #e5e5e5;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f9f9f9;
-    padding: 40px;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg-gray);
+    color: var(--text-primary);
+}
+
+
+
+.container {
+    max-width: 1800px;
+    margin: 100px auto 40px;
+    padding: 0 24px;
 }
 
 h1 {
@@ -248,62 +274,55 @@ h1 {
 
 
 
-
 .admin-navbar {
     background-color: #fff;
-    border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
-    z-index: 1001;
-    padding: 12px 0;
-    font-family: 'Inter', sans-serif;
+    border-bottom: 1px solid var(--border-color);
+    height: 64px;
 }
+
 .admin-navbar__container {
-    max-width: 1200px;
+    max-width: 1800px;
+    height: 100%;
     margin: 0 auto;
     padding: 0 24px;
     display: flex;
     align-items: center;
-    gap: 32px;
-    flex-wrap: wrap;
     justify-content: space-between;
 }
+
 .admin-navbar__logo {
-    font-size: 18px;
-    font-weight: 700;
-    color: #e6007e;
-    white-space: nowrap;
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 24px;
 }
+
 .admin-navbar__menu {
     display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    margin: 0;
-    padding: 0;
+    gap: 20px;
     list-style: none;
+    flex: 1;
 }
+
 .admin-navbar__menu li a {
     text-decoration: none;
-    font-size: 15px;
     color: #333;
-    transition: color 0.2s ease;
-    white-space: nowrap;
-}
-.admin-navbar__menu li a:hover {
-    color: #e6007e;
-}
-@media (max-width: 768px) {
-    .admin-navbar__container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .admin-navbar__menu {
-        justify-content: flex-start;
-        flex-wrap: wrap;
-    }
+    font-weight: 500;
+    padding: 8px 12px;
 }
 
+.admin-navbar__right {
+    display: flex;
+    align-items: center;
+}
 
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
 
 
 .custom-select {
