@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>챗봇 통계 대시보드</title>
-    <link rel="stylesheet" href="/chat/css/chatStatistic.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/chat/css/chatStatistic.css" />
 </head>
 <body>
 <nav class="admin-navbar">
     <div class="admin-navbar__container">
-        <div class="admin-navbar__logo">Admin</div>
+        <div class="admin-navbar__logo">YOAJUNG-ADMIN</div>
         <ul class="admin-navbar__menu">
             <li><a href="/plan/planList.html">요금제</a></li>
             <li><a href="/plan/planStatistics.html">요금제 통계</a></li>
@@ -17,26 +19,39 @@
             <li><a href="/product/productList.html">상품</a></li>
             <li><a href="/reviews/reviewList.html">리뷰</a></li>
         </ul>
+        <div class="admin-navbar__right">
+            <button class="btn btn-primary" onclick="logout()">로그아웃</button>
+        </div>
     </div>
 </nav>
 
-<h1>챗봇 통계</h1>
-<div id="current-time"></div>
+<main class="container">
+    <h1 class="page-title">챗봇 통계</h1>
+    <div id="current-time" class="sub-text text-center"></div>
 
-<div class="tabs">
-    <button class="tab-btn active" data-tab="users">👤 사용자 수</button>
-    <button class="tab-btn" data-tab="messages">💬 메시지 수</button>
-</div>
+    <div class="card">
+        <div class="card-body">
 
-<div class="sub-tabs">
-    <button class="sub-tab-btn active" data-period="daily">일간</button>
-    <button class="sub-tab-btn" data-period="weekly">주간</button>
-    <button class="sub-tab-btn" data-period="monthly">월간</button>
-</div>
+            <!-- 버튼 영역 -->
+            <div class="chart-controls">
+                <div class="tab-group">
+                    <button class="tab-btn active" data-tab="users">👤 사용자 수</button>
+                    <button class="tab-btn" data-tab="messages">💬 메시지 수</button>
+                </div>
 
-<div class="chart-box">
-    <canvas id="mainChart"></canvas>
-</div>
+                <div class="sub-tab-group">
+                    <button class="sub-tab-btn active" data-period="daily">일간</button>
+                    <button class="sub-tab-btn" data-period="weekly">주간</button>
+                    <button class="sub-tab-btn" data-period="monthly">월간</button>
+                </div>
+            </div>
+
+            <!-- 차트 영역 -->
+            <canvas id="mainChart"></canvas>
+        </div>
+    </div>
+</main>
+
 <script src="/chat/js/chatStatistics.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>

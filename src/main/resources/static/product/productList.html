@@ -2,13 +2,15 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>상품 목록</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>상품 목록 - Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/product/css/productList.css">
 </head>
 <body>
 <nav class="admin-navbar">
     <div class="admin-navbar__container">
-        <div class="admin-navbar__logo">Admin</div>
+        <div class="admin-navbar__logo">YOAJUNG-ADMIN</div>
         <ul class="admin-navbar__menu">
             <li><a href="/plan/planList.html">요금제</a></li>
             <li><a href="/plan/planStatistics.html">요금제 통계</a></li>
@@ -17,30 +19,37 @@
             <li><a href="/product/productList.html">상품</a></li>
             <li><a href="/reviews/reviewList.html">리뷰</a></li>
         </ul>
+        <div class="admin-navbar__right">
+            <button class="btn btn-primary" onclick="logout()">로그아웃</button>
+        </div>
     </div>
 </nav>
 
-<h1>상품 목록</h1>
-<div class="top-actions">
-    <button class="btn btn-primary" onclick="openProductModal()">+ 상품 등록</button>
-</div>
-
-<table id="productTable">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>이름</th>
-        <th>유형</th>
-        <th>카테고리</th>
-        <th>설명</th>
-        <th>이미지</th>
-        <th>관리</th>
-    </tr>
-    </thead>
-    <tbody id="productTableBody"></tbody>
-</table>
-
-<div id="pagination" class="pagination"></div>
+<main class="container">
+    <h1 class="page-title">상품 목록</h1>
+    <div class="top-actions">
+        <button class="btn btn-primary" onclick="openProductModal()">+ 상품 등록</button>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <table class="plan-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>이름</th>
+                    <th>유형</th>
+                    <th>카테고리</th>
+                    <th>설명</th>
+                    <th>이미지</th>
+                    <th>관리</th>
+                </tr>
+                </thead>
+                <tbody id="productTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+    <div id="pagination" class="pagination"></div>
+</main>
 
 <!-- 등록 모달 -->
 <div class="modal-backdrop" id="createProductModal">

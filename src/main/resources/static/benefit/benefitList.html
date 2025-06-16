@@ -2,93 +2,101 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>혜택 목록</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>혜택 목록 - Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/benefit/css/benefitList.css">
 </head>
 <body>
 <nav class="admin-navbar">
     <div class="admin-navbar__container">
-        <div class="admin-navbar__logo">Admin</div>
+        <div class="admin-navbar__logo">YOAJUNG-ADMIN</div>
         <ul class="admin-navbar__menu">
             <li><a href="/plan/planList.html">요금제</a></li>
             <li><a href="/plan/planStatistics.html">요금제 통계</a></li>
             <li><a href="/chat/chatStatistics.html">채팅 통계</a></li>
             <li><a href="/benefit/benefitList.html">혜택</a></li>
             <li><a href="/product/productList.html">상품</a></li>
-            <li><a href="/reviews/reviewList.html">리뷰</a></li>
+            <li><a href="/review">리뷰</a></li>
         </ul>
+        <div class="admin-navbar__right">
+            <button class="btn btn-primary" onclick="logout()">로그아웃</button>
+        </div>
     </div>
 </nav>
 
-
-<h1>혜택 목록</h1>
-    <div class="top-actions">
+<main class="container">
+    <h1 class="page-title">혜택 목록</h1>
+    <div class="actions">
         <button class="btn btn-primary" onclick="openModal()">+ 혜택 등록</button>
     </div>
-    <table id="benefitTable">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>유형</th>
-            <th>이름</th>
-            <th>설명</th>
-            <th>음성</th>
-            <th>문자</th>
-            <th>할인 금액</th>
-            <th>관리</th>
-        </tr>
-        </thead>
-        <tbody id="benefitTableBody"></tbody>
-    </table>
-
-
+    <div class="card">
+        <div class="card-body">
+            <table class="benefit-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>유형</th>
+                    <th>이름</th>
+                    <th>설명</th>
+                    <th>음성</th>
+                    <th>문자</th>
+                    <th>할인 금액</th>
+                    <th>관리</th>
+                </tr>
+                </thead>
+                <tbody id="benefitTableBody"></tbody>
+            </table>
+        </div>
+    </div>
     <div id="pagination" class="pagination"></div>
+</main>
 
-    <!-- 등록 모달 -->
-    <div class="modal-backdrop" id="createModal">
-        <div class="modal">
-            <h2>혜택 등록</h2>
-            <label>유형</label>
-            <select id="benefitTypeSelect"></select>
-            <label>이름</label>
-            <input type="text" id="benefitName" />
-            <label>설명</label>
-            <input type="text" id="benefitDescription" />
-            <label>음성</label>
-            <input type="number" id="voiceLimit" />
-            <label>문자</label>
-            <input type="number" id="smsLimit" />
-            <label>할인금액</label>
-            <input type="number" id="discountAmount" />
-            <div class="modal-buttons">
-                <button class="btn btn-primary" onclick="submitBenefit()">등록</button>
-                <button class="btn btn-ghost" onclick="closeModal()">닫기</button>
-            </div>
+<!-- 등록 모달 -->
+<div class="modal-backdrop" id="createModal">
+    <div class="modal">
+        <h2>혜택 등록</h2>
+        <label>유형</label>
+        <select id="benefitTypeSelect"></select>
+        <label>이름</label>
+        <input type="text" id="benefitName" />
+        <label>설명</label>
+        <input type="text" id="benefitDescription" />
+        <label>음성</label>
+        <input type="number" id="voiceLimit" />
+        <label>문자</label>
+        <input type="number" id="smsLimit" />
+        <label>할인금액</label>
+        <input type="number" id="discountAmount" />
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="submitBenefit()">등록</button>
+            <button class="btn btn-ghost" onclick="closeModal()">닫기</button>
         </div>
     </div>
+</div>
 
-    <!-- 수정 모달 -->
-    <div class="modal-backdrop" id="editModal">
-        <div class="modal">
-            <h2>혜택 수정</h2>
-            <label>유형</label>
-            <select id="editBenefitTypeSelect"></select>
-            <label>이름</label>
-            <input type="text" id="editBenefitName" />
-            <label>설명</label>
-            <input type="text" id="editBenefitDescription" />
-            <label>음성</label>
-            <input type="number" id="editVoiceLimit" />
-            <label>문자</label>
-            <input type="number" id="editSmsLimit" />
-            <label>할인금액</label>
-            <input type="number" id="editDiscountAmount" />
-            <div class="modal-buttons">
-                <button class="btn btn-primary" onclick="submitEditBenefit()">수정</button>
-                <button class="btn btn-ghost" onclick="closeEditModal()">닫기</button>
-            </div>
+<!-- 수정 모달 -->
+<div class="modal-backdrop" id="editModal">
+    <div class="modal">
+        <h2>혜택 수정</h2>
+        <label>유형</label>
+        <select id="editBenefitTypeSelect"></select>
+        <label>이름</label>
+        <input type="text" id="editBenefitName" />
+        <label>설명</label>
+        <input type="text" id="editBenefitDescription" />
+        <label>음성</label>
+        <input type="number" id="editVoiceLimit" />
+        <label>문자</label>
+        <input type="number" id="editSmsLimit" />
+        <label>할인금액</label>
+        <input type="number" id="editDiscountAmount" />
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="submitEditBenefit()">수정</button>
+            <button class="btn btn-ghost" onclick="closeEditModal()">닫기</button>
         </div>
     </div>
+</div>
 
 <script src="/benefit/js/benefitList.js"></script>
 </body>
