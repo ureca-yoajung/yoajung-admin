@@ -9,6 +9,9 @@ import com.ureca.yoajungadmin.plan.service.ProductService;
 import com.ureca.yoajungadmin.plan.service.response.ListProductResponse;
 import com.ureca.yoajungadmin.plan.service.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
                 .productType(createProductRequest.getProductType())
                 .productCategory(createProductRequest.getProductCategory())
                 .description(createProductRequest.getDescription())
-                .productImage("")
+                .productImage(createProductRequest.getProductImage())
                 .build();
 
         productRepository.save(product);
@@ -48,13 +51,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ListProductResponse getProductList() {
-        List<ProductResponse> productList = productRepository.findAll()
+    public ListProductResponse getProductList(Integer pageNumber, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by("id").descending());
+
+        Page<Product> productPage = productRepository.findAll(pageRequest);
+
+        List<ProductResponse> productList = productPage.getContent()
                 .stream()
                 .map(ProductResponse::from)
                 .toList();
 
-        return new ListProductResponse(productList);
+        return new ListProductResponse(productList, productPage.getNumber() + 1, productPage.getSize(), productPage.getTotalElements());
     }
 
     @Override

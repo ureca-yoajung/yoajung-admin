@@ -52,9 +52,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<ListProductResponse>> getProductList() {
+    public ResponseEntity<ApiResponse<ListProductResponse>> getProductList(@RequestParam(name = "pageNumber", defaultValue = "1") Integer pageNumber,
+                                                                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
         return ResponseEntity
-                .ok(ApiResponse.of(PRODUCT_LIST_SUCCESS, productService.getProductList()));
+                .ok(ApiResponse.of(PRODUCT_LIST_SUCCESS, productService.getProductList(pageNumber - 1, pageSize)));
     }
 
     @PatchMapping("/{productId}")

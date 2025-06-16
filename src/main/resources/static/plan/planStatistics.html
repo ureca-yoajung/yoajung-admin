@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>요금제 통계</title>
+    <link rel="stylesheet" href="/plan/css/planStatistics.css">
+</head>
+<body>
+<nav class="admin-navbar">
+    <div class="admin-navbar__container">
+        <div class="admin-navbar__logo">Admin</div>
+        <ul class="admin-navbar__menu">
+            <li><a href="/plan/planList.html">요금제</a></li>
+            <li><a href="/plan/planStatistics.html">요금제 통계</a></li>
+            <li><a href="/chat/chatStatistics.html">채팅 통계</a></li>
+            <li><a href="/benefit/benefitList.html">혜택</a></li>
+            <li><a href="/product/productList.html">상품</a></li>
+            <li><a href="/review">리뷰</a></li>
+        </ul>
+    </div>
+</nav>
+
+<h1>요금제 연령대 통계</h1>
+<div id="current-time"></div>
+
+<div class="chart-box">
+    <canvas id="planChart"></canvas>
+</div>
+
+<script src="/plan/js/planStatistics.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

@@ -10,4 +10,7 @@ import java.util.List;
 public class ListProductResponse {
 
     private List<ProductResponse> productResponseList;
+    private Integer pageNumber;
+    private Integer pageSize;
+    private Long totalElements;
 }

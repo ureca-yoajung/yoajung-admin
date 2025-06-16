@@ -8,7 +8,7 @@ import com.ureca.yoajungadmin.plan.service.response.ListBenefitResponse;
 public interface BenefitService {
     Long createBenefit(CreateBenefitRequest createBenefitRequest);
     BenefitResponse getBenefit(Long benefitId);
-    ListBenefitResponse getBenefitList();
+    ListBenefitResponse getBenefitList(Integer pageNumber, Integer pageSize);
     void updateBenefit(Long benefitId, UpdateBenefitRequest updateBenefitRequest);
     void deleteBenefit(Long benefitId);
 }

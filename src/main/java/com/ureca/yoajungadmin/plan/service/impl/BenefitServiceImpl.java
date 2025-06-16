@@ -9,6 +9,9 @@ import com.ureca.yoajungadmin.plan.service.BenefitService;
 import com.ureca.yoajungadmin.plan.service.response.BenefitResponse;
 import com.ureca.yoajungadmin.plan.service.response.ListBenefitResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,13 +52,15 @@ public class BenefitServiceImpl implements BenefitService {
     }
 
     @Override
-    public ListBenefitResponse getBenefitList() {
-        List<BenefitResponse> benefitResponseList = benefitRepository.findAll()
-                .stream()
-                .map(BenefitResponse::from)
+    public ListBenefitResponse getBenefitList(Integer pageNumber, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by("id").descending());
+
+        Page<Benefit> benefitPage = benefitRepository.findAll(pageRequest);
+
+        List<BenefitResponse> benefitResponseList = benefitPage.getContent().stream().map(BenefitResponse::from)
                 .toList();
 
-        return new ListBenefitResponse(benefitResponseList);
+        return new ListBenefitResponse(benefitResponseList, benefitPage.getNumber() + 1, benefitPage.getSize(), benefitPage.getTotalElements());
     }
 
     @Override

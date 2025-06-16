@@ -9,7 +9,7 @@ public interface ProductService {
 
     Long createProduct(CreateProductRequest createProductRequest);
     ProductResponse getProduct(Long productId);
-    ListProductResponse getProductList();
+    ListProductResponse getProductList(Integer pageNumber, Integer pageSize);
     void updateProduct(Long productId, UpdateProductRequest updateProductRequest);
     void deleteProduct(Long productId);
 }
