@@ -11,5 +11,6 @@ public interface ProductService {
     ProductResponse getProduct(Long productId);
     ListProductResponse getProductList(Integer pageNumber, Integer pageSize);
     void updateProduct(Long productId, UpdateProductRequest updateProductRequest);
-    void deleteProduct(Long productId);
+    void deleteProduct(Long productId, String imageUrl);
+    void deleteImageFromProduct(Long productId, String imageAddr);
 }

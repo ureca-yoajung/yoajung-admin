@@ -63,7 +63,17 @@ public enum BaseCode {
     BENEFIT_LIST_SUCCESS("READ_BENEFIT_LIST_200", HttpStatus.OK, "혜택 목록 조회에 성공했습니다."),
     BENEFIT_DETAIL_SUCCESS("FIND_BENEFIT_DETAIL_200", HttpStatus.OK, "혜택 상세 조회에 성공했습니다."),
     BENEFIT_NOT_FOUND("NOT_FOUND_BENEFIT_404", HttpStatus.NOT_FOUND, "해당 혜택을 찾을 수 없습니다."),
-    BENEFIT_TYPE_LIST_SUCCESS   ("READ_BENEFIT_TYPE_LIST_200",   HttpStatus.OK, "혜택 타입 목록 조회에 성공했습니다!");
+    BENEFIT_TYPE_LIST_SUCCESS   ("READ_BENEFIT_TYPE_LIST_200",   HttpStatus.OK, "혜택 타입 목록 조회에 성공했습니다!"),
+
+   // S3
+    IMAGE_UPLOAD_SUCCESS("IMAGE_UPLOAD_200", HttpStatus.OK, "이미지 업로드 성공"),
+    IMAGE_DELETE_SUCCESS("IMAGE_DELETE_200", HttpStatus.OK, "이미지 삭제 성공"),
+    INVALID_IMAGE("INVALID_IMAGE_400", HttpStatus.BAD_REQUEST, "이미지 파일은 비어있을 수 없습니다."),
+    INVALID_IMAGE_EXTENSION("INVALID_IMAGE_EXTENSION_400", HttpStatus.BAD_REQUEST, "이미지 확장자 형식이 맞지 않습니다."),
+    IMAGE_UPLOAD_FAIL("IMAGE_UPLOAD_FAIL_500", HttpStatus.INTERNAL_SERVER_ERROR, "S3 이미지 업로드를 실패."),
+    IMAGE_DELETE_FAIL("IMAGE_DELETE_FAIL_500", HttpStatus.INTERNAL_SERVER_ERROR, "S3 이미지 삭제에 실패."),
+    MALFORMED_IMAGE_URL("MALFORMED_IMAGE_URL_400", HttpStatus.BAD_REQUEST, "이미지 주소 형식이 잘못되었습니다.");
+
 
     private final String code;
     private final HttpStatus status;

@@ -1,13 +1,14 @@
-package com.ureca.yoajungadmin.plan.service.impl;
+package com.ureca.yoajungadmin.s3.service;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.util.IOUtils;
-import com.ureca.yoajungadmin.plan.service.AwsImgService;
+import com.ureca.yoajungadmin.common.BaseCode;
+import com.ureca.yoajungadmin.s3.exception.ImageDeleteFailException;
+import com.ureca.yoajungadmin.s3.exception.ImageUploadFailException;
+import com.ureca.yoajungadmin.s3.exception.InvalidImageException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,24 +37,29 @@ public class AwsImgServiceImpl implements AwsImgService {
     @Value("${spring.cloud.aws.s3.bucket}")
     private String bucket;
 
+    public String uploadWithOptionalDelete(MultipartFile newFile, String oldUrl) {
+        if (oldUrl != null && !oldUrl.isBlank()) {
+            deleteImg(oldUrl);
+        }
+        return uploadImg(newFile);
+    }
+
     @Override
     public String uploadImg(MultipartFile image) {
         if(image.isEmpty() || Objects.isNull(image.getOriginalFilename())){
-            throw new IllegalArgumentException("이미지 파일은 비어있을 수 없습니다.");
+            throw new InvalidImageException(BaseCode.INVALID_IMAGE);
         }
         return uploadImage(image);
     }
 
     @Override
-    public boolean deleteImageFromS3(String imageAddress) {
-        String key = getKeyFromImageAddress(imageAddress);
+    public void deleteImg(String imageAddr) {
+        String key = getKeyFromImageAddress(imageAddr);
         try {
             amazonS3.deleteObject(new DeleteObjectRequest(bucket, key));
         } catch (Exception e) {
-            throw new IllegalArgumentException("S3 이미지 삭제에 실패.");
+            throw new ImageDeleteFailException();
         }
-
-        return true;
     }
 
     private String getKeyFromImageAddress(String imageAddress){
@@ -71,7 +77,7 @@ public class AwsImgServiceImpl implements AwsImgService {
         try {
             return this.uploadImageToS3(image, PLAN_IMG_DIR);
         } catch (IOException e) {
-            throw new IllegalArgumentException("S3 이미지 업로드를 실패.");
+            throw new ImageUploadFailException();
         }
     }
 
@@ -112,14 +118,14 @@ public class AwsImgServiceImpl implements AwsImgService {
     private void validateImageFileExtention(String filename) {
         int lastDotIndex = filename.lastIndexOf(".");
         if (lastDotIndex == -1) {
-            throw new IllegalArgumentException("이미지 확장자가 없습니다.");
+            throw new InvalidImageException(BaseCode.MALFORMED_IMAGE_URL);
         }
 
         String extention = filename.substring(lastDotIndex + 1).toLowerCase();
         List<String> allowedExtentionList = Arrays.asList("jpg", "jpeg", "png", "gif");
 
         if (!allowedExtentionList.contains(extention)) {
-            throw new IllegalArgumentException("이미지 확장자 형식이 맞지 않습니다.");
+            throw new InvalidImageException(BaseCode.INVALID_IMAGE_EXTENSION);
         }
     }
 }

@@ -8,6 +8,7 @@ import com.ureca.yoajungadmin.plan.repository.ProductRepository;
 import com.ureca.yoajungadmin.plan.service.ProductService;
 import com.ureca.yoajungadmin.plan.service.response.ListProductResponse;
 import com.ureca.yoajungadmin.plan.service.response.ProductResponse;
+import com.ureca.yoajungadmin.s3.service.AwsImgServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +26,7 @@ import static com.ureca.yoajungadmin.common.BaseCode.*;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final AwsImgServiceImpl awsImgServiceImpl;
 
     @Override
     public Long createProduct(CreateProductRequest createProductRequest) {
@@ -80,7 +82,26 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(Long productId) {
+    public void deleteProduct(Long productId, String imageUrl) {
         productRepository.deleteById(productId);
+
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            awsImgServiceImpl.deleteImg(imageUrl);
+        }
     }
+
+    @Override
+    public void deleteImageFromProduct(Long productId, String imageAddr) {
+        awsImgServiceImpl.deleteImg(imageAddr);
+
+        Product product = productRepository
+                .findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(PRODUCT_NOT_FOUND));
+
+        if (product != null) {
+            product.removeImage();
+            productRepository.save(product);
+        }
+    }
+
 }

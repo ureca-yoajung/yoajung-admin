@@ -52,6 +52,11 @@ tr:hover {
     color: white;
 }
 
+.btn-delete {
+    background-color: #4a90e2;
+    color: white;
+}
+
 .btn-ghost {
     background-color: transparent;
     color: #333;
@@ -101,6 +106,39 @@ tr:hover {
 .modal-buttons {
     margin-top: 16px;
     text-align: right;
+}
+
+.image-section {
+    margin-top: 16px;
+    padding: 12px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+.image-preview {
+    margin: 8px 0;
+    text-align: center;
+}
+
+.image-preview img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* 파일 입력 스타일 조정 */
+.image-section input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: white;
+    font-size: 14px;
 }
 
 .admin-navbar {

@@ -5,7 +5,7 @@ import com.ureca.yoajungadmin.plan.controller.request.CreateProductRequest;
 import com.ureca.yoajungadmin.plan.controller.request.UpdateProductRequest;
 import com.ureca.yoajungadmin.plan.entity.enums.ProductCategory;
 import com.ureca.yoajungadmin.plan.entity.enums.ProductType;
-import com.ureca.yoajungadmin.plan.service.AwsImgService;
+import com.ureca.yoajungadmin.s3.service.AwsImgService;
 import com.ureca.yoajungadmin.plan.service.ProductService;
 import com.ureca.yoajungadmin.plan.service.response.ListProductResponse;
 import com.ureca.yoajungadmin.plan.service.response.ProductResponse;
@@ -69,22 +69,29 @@ public class ProductController {
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<ApiResponse<?>> removeProduct(@PathVariable("productId") Long productId) {
-        productService.deleteProduct(productId);
+    public ResponseEntity<ApiResponse<?>> removeProduct(
+            @PathVariable("productId") Long productId, @RequestParam(required = false) String imageUrl) {
+        productService.deleteProduct(productId, imageUrl);
 
         return ResponseEntity
                 .ok(ApiResponse.ok(PRODUCT_DELETE_SUCCESS));
     }
 
-    @PostMapping("/s3/upload")
-    public ResponseEntity<?> s3Upload(@RequestPart(value = "file", required = false) MultipartFile image){
-        String profileImage = awsImgService.uploadImg(image);
-        return ResponseEntity.ok(profileImage);
+    @PostMapping("/image")
+    public ResponseEntity<?> uploadImage(@RequestPart("file") MultipartFile image,
+                                         @RequestParam(value = "oldUrl", required = false) String oldUrl) {
+
+        String uploadedUrl = awsImgService.uploadWithOptionalDelete(image, oldUrl);
+        return ResponseEntity.status(BENEFIT_CREATE_SUCCESS.getStatus())
+                .body(ApiResponse.of(BENEFIT_CREATE_SUCCESS, uploadedUrl));
     }
 
-    @GetMapping("/s3/delete")
-    public ResponseEntity<?> s3delete(@RequestParam String addr){
-        Boolean status = awsImgService.deleteImageFromS3(addr);
-        return ResponseEntity.ok(status);
+    @DeleteMapping("/{productId}/image")
+    public ResponseEntity<?> deleteImg(@PathVariable("productId") Long productId,
+                                       @RequestParam String imageAddr) {
+        productService.deleteImageFromProduct(productId, imageAddr);
+        return ResponseEntity.status(IMAGE_DELETE_SUCCESS.getStatus())
+                .body(ApiResponse.ok(IMAGE_DELETE_SUCCESS));
     }
+
 }
