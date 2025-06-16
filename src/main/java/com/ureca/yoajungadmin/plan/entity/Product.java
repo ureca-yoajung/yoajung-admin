@@ -54,4 +54,8 @@ public class Product extends BaseTimeEntity {
         this.description = description;
         this.productImage = productImage;
     }
+
+    public void removeImage() {
+        this.productImage = "";
+    }
 }

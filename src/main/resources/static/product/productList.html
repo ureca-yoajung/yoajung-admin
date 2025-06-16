@@ -63,8 +63,8 @@
         <select id="productCategorySelect"></select>
         <label>설명</label>
         <input type="text" id="productDescription">
-        <label>이미지 URL</label>
-        <input type="text" id="productImage">
+        <label for="file">이미지 선택:</label>
+        <input type="file" name="file" id="file" accept="image/*" required>
         <div class="modal-buttons">
             <button class="btn btn-primary" onclick="submitProduct()">등록</button>
             <button class="btn btn-ghost" onclick="closeProductModal()">닫기</button>
@@ -82,10 +82,18 @@
         <select id="editProductTypeSelect"></select>
         <label>카테고리</label>
         <select id="editProductCategorySelect"></select>
+        <!-- 이미지 영역 분리 -->
+        <div class="image-section">
+            <label>기존 이미지</label>
+            <div class="image-preview">
+                <input type="hidden" id="editProductImageUrl">
+                <img id="editProductImage" alt="기존 이미지">
+            </div>
+            <label for="editFile">변경 이미지:</label>
+            <input type="file" name="editFile" id="editFile" accept="image/*">
+        </div>
         <label>설명</label>
         <input type="text" id="editProductDescription">
-        <label>이미지 URL</label>
-        <input type="text" id="editProductImage">
         <div class="modal-buttons">
             <button class="btn btn-primary" onclick="submitEditProduct()">수정</button>
             <button class="btn btn-ghost" onclick="closeEditProductModal()">닫기</button>
