@@ -18,12 +18,24 @@ spring:
     show-sql: true
     open-in-view: false
     hibernate:
-      ddl-auto: update
+#      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         format_sql: true
+
+  cloud:
+    aws:
+      credentials:
+        accessKey: "${S3_ACCESSKEY}"
+        secretKey: "${S3_SECRETKEY}"
+      region:
+        static: ap-northeast-2
+      s3:
+        bucket: yoajung-img
+      stack:
+        auto: false
 
 logging:
   level:

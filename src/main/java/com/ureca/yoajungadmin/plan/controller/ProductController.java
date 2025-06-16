@@ -5,12 +5,14 @@ import com.ureca.yoajungadmin.plan.controller.request.CreateProductRequest;
 import com.ureca.yoajungadmin.plan.controller.request.UpdateProductRequest;
 import com.ureca.yoajungadmin.plan.entity.enums.ProductCategory;
 import com.ureca.yoajungadmin.plan.entity.enums.ProductType;
+import com.ureca.yoajungadmin.plan.service.AwsImgService;
 import com.ureca.yoajungadmin.plan.service.ProductService;
 import com.ureca.yoajungadmin.plan.service.response.ListProductResponse;
 import com.ureca.yoajungadmin.plan.service.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import static com.ureca.yoajungadmin.common.BaseCode.*;
 
@@ -20,6 +22,7 @@ import static com.ureca.yoajungadmin.common.BaseCode.*;
 public class ProductController {
 
     private final ProductService productService;
+    private final AwsImgService awsImgService;
 
     @GetMapping("/enums/service-types")
     public ResponseEntity<ApiResponse<ProductType[]>> getProductTypeList() {
@@ -70,5 +73,17 @@ public class ProductController {
 
         return ResponseEntity
                 .ok(ApiResponse.ok(PRODUCT_DELETE_SUCCESS));
+    }
+
+    @PostMapping("/s3/upload")
+    public ResponseEntity<?> s3Upload(@RequestPart(value = "file", required = false) MultipartFile image){
+        String profileImage = awsImgService.uploadImg(image);
+        return ResponseEntity.ok(profileImage);
+    }
+
+    @GetMapping("/s3/delete")
+    public ResponseEntity<?> s3delete(@RequestParam String addr){
+        Boolean status = awsImgService.deleteImageFromS3(addr);
+        return ResponseEntity.ok(status);
     }
 }
