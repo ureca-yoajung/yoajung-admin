@@ -3,8 +3,8 @@ const pageSize = 20;
 
 document.addEventListener('DOMContentLoaded', () => {
     loadPlans(currentPage);
-    loadMultiSelect('benefitSelect', '/benefits');
-    loadMultiSelect('productSelect', '/products');
+    loadMultiSelect('benefitSelect', '/benefits/all');
+    loadMultiSelect('productSelect', '/products/all');
 });
 
 function loadPlans(page) {
@@ -16,23 +16,24 @@ function loadPlans(page) {
             data.data.planResponseList.forEach(plan => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                        <td>${plan.id}</td>
-                        <td>${plan.name}</td>
-                        <td>${plan.networkType}</td>
-                        <td>${plan.planCategory}</td>
-                        <td>${plan.basePrice}</td>
-                        <td>${plan.dataAllowance}</td>
-                        <td>${plan.tetheringSharingAllowance}</td>
-                        <td>${plan.speedAfterLimit}</td>
-                        <td>${plan.description || '-'}</td>
-                        <td>${(plan.benefitResponseList||[]).map(b=>b.name).join(', ')||'-'}</td>
-                        <td>${(plan.productResponseList||[]).map(p=>p.name).join(', ')||'-'}</td>
-                        <td>
-                            <button class="btn btn-primary edit-btn">수정</button>
-                            <button class="btn btn-ghost" onclick="deletePlan(${plan.id})">삭제</button>
-                        </td>`;
+                    <td>${plan.id}</td>
+                    <td>${plan.name}</td>
+                    <td>${plan.networkType}</td>
+                    <td>${plan.planCategory}</td>
+                    <td>${plan.basePrice}</td>
+                    <td>${plan.dataAllowance}</td>
+                    <td>${plan.tetheringSharingAllowance}</td>
+                    <td>${plan.speedAfterLimit}</td>
+                    <td>${plan.description || '-'}</td>
+                    <td>${(plan.benefitResponseList||[]).map(b => b.name).join(', ') || '-'}</td>
+                    <td>${(plan.productResponseList||[]).map(p => p.name).join(', ') || '-'}</td>
+                    <td>
+                        <button class="btn btn-primary edit-btn">수정</button>
+                        <button class="btn btn-ghost" onclick="deletePlan(${plan.id})">삭제</button>
+                    </td>`;
                 tbody.appendChild(row);
-                row.querySelector('.edit-btn').addEventListener('click', () => openEditModal(plan));
+                row.querySelector('.edit-btn')
+                    .addEventListener('click', () => openEditModal(plan));
             });
             renderPagination(data.data.pageNumber + 1, data.data.pageSize, data.data.totalElements);
         });
@@ -67,6 +68,7 @@ function deletePlan(planId) {
 function openPlanModal() {
     document.getElementById('createPlanModal').classList.add('show');
 }
+
 function closePlanModal() {
     document.getElementById('createPlanModal').classList.remove('show');
 }
@@ -81,8 +83,12 @@ function submitPlan() {
         tetheringSharingAllowance: +document.getElementById('planTethering').value,
         speedAfterLimit: +document.getElementById('planSpeedLimit').value,
         description: document.getElementById('planDescription').value,
-        benefitIdList: Array.from(document.getElementById('benefitSelect').selectedOptions).map(o => +o.value),
-        productIdList: Array.from(document.getElementById('productSelect').selectedOptions).map(o => +o.value)
+        benefitIdList: Array.from(
+            document.getElementById('benefitSelect').selectedOptions
+        ).map(o => +o.value),
+        productIdList: Array.from(
+            document.getElementById('productSelect').selectedOptions
+        ).map(o => +o.value)
     };
     fetch('/plans', {
         method: 'POST',
@@ -118,6 +124,7 @@ function loadMultiSelect(selectId, url) {
 }
 
 function openEditModal(plan) {
+    // 기본 필드 채우기
     document.getElementById('editPlanId').value = plan.id;
     document.getElementById('editPlanName').value = plan.name;
     document.getElementById('editNetworkTypeSelect').value = plan.networkType;
@@ -128,30 +135,43 @@ function openEditModal(plan) {
     document.getElementById('editPlanSpeedLimit').value = plan.speedAfterLimit;
     document.getElementById('editPlanDescription').value = plan.description || '';
 
-    fetch('/benefits').then(r => r.json()).then(d => {
-        const sel = document.getElementById('editBenefitSelect');
-        sel.innerHTML = '';
-        d.data.benefitResponseList.forEach(b => {
-            const o = document.createElement('option');
-            o.value = b.id;
-            o.textContent = `${b.name} (${b.id})`;
-            if (plan.benefitResponseList?.some(pb => pb.id === b.id)) o.selected = true;
-            sel.appendChild(o);
+    // 혜택 목록 불러오기 (/benefits/all)
+    fetch('/benefits/all')
+        .then(r => r.json())
+        .then(d => {
+            const sel = document.getElementById('editBenefitSelect');
+            sel.innerHTML = '';
+            d.data.benefitResponseList.forEach(b => {
+                const o = document.createElement('option');
+                o.value = b.id;
+                o.textContent = `${b.name} (${b.id})`;
+                if (plan.benefitResponseList?.some(pb => pb.id === b.id)) {
+                    o.selected = true;
+                }
+                sel.appendChild(o);
+            });
         });
-    });
-    fetch('/products').then(r => r.json()).then(d => {
-        const sel = document.getElementById('editProductSelect');
-        sel.innerHTML = '';
-        d.data.productResponseList.forEach(p => {
-            const o = document.createElement('option');
-            o.value = p.id;
-            o.textContent = `${p.name} (${p.id})`;
-            if (plan.productResponseList?.some(pp => pp.id === p.id)) o.selected = true;
-            sel.appendChild(o);
+
+    // 상품 목록 불러오기 (/products/all)
+    fetch('/products/all')
+        .then(r => r.json())
+        .then(d => {
+            const sel = document.getElementById('editProductSelect');
+            sel.innerHTML = '';
+            d.data.productResponseList.forEach(p => {
+                const o = document.createElement('option');
+                o.value = p.id;
+                o.textContent = `${p.name} (${p.id})`;
+                if (plan.productResponseList?.some(pp => pp.id === p.id)) {
+                    o.selected = true;
+                }
+                sel.appendChild(o);
+            });
         });
-    });
+
     document.getElementById('editPlanModal').classList.add('show');
 }
+
 function closeEditModal() {
     document.getElementById('editPlanModal').classList.remove('show');
 }
@@ -167,8 +187,12 @@ function submitEditPlan() {
         tetheringSharingAllowance: +document.getElementById('editPlanTethering').value,
         speedAfterLimit: +document.getElementById('editPlanSpeedLimit').value,
         description: document.getElementById('editPlanDescription').value,
-        benefitIds: Array.from(document.getElementById('editBenefitSelect').selectedOptions).map(o => +o.value),
-        serviceIds: Array.from(document.getElementById('editProductSelect').selectedOptions).map(o => +o.value)
+        benefitIds: Array.from(
+            document.getElementById('editBenefitSelect').selectedOptions
+        ).map(o => +o.value),
+        serviceIds: Array.from(
+            document.getElementById('editProductSelect').selectedOptions
+        ).map(o => +o.value)
     };
     fetch(`/plans/${id}`, {
         method: 'PUT',

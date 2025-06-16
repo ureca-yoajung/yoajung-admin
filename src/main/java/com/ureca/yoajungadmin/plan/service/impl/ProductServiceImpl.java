@@ -65,6 +65,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ListProductResponse getAllProductList() {
+        List<ProductResponse> productResponseList = productRepository.findAll()
+                .stream()
+                .map(ProductResponse::from)
+                .toList();
+
+        return new ListProductResponse(productResponseList, 0, 0, 0L);
+    }
+
+    @Override
     public void updateProduct(Long productId, UpdateProductRequest updateProductRequest) {
         Product product = productRepository
                 .findById(productId)

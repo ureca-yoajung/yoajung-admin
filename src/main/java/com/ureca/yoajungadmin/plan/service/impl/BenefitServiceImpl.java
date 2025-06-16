@@ -64,6 +64,16 @@ public class BenefitServiceImpl implements BenefitService {
     }
 
     @Override
+    public ListBenefitResponse getAllBenefitList() {
+        List<BenefitResponse> benefitResponseList = benefitRepository.findAll()
+                .stream()
+                .map(BenefitResponse::from)
+                .toList();
+
+        return new ListBenefitResponse(benefitResponseList, 0, 0, 0L);
+    }
+
+    @Override
     public void updateBenefit(Long benefitId, UpdateBenefitRequest updateBenefitRequest) {
         Benefit benefit = benefitRepository
                 .findById(benefitId)
