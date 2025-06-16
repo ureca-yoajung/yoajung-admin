@@ -30,7 +30,7 @@ body {
 }
 
 .admin-navbar__container {
-    max-width: 1200px;
+    max-width: 1800px;
     height: 100%;
     margin: 0 auto;
     padding: 0 24px;
@@ -68,7 +68,7 @@ body {
 
 
 .container {
-    max-width: 1200px;
+    max-width: 1800px;
     margin: 100px auto 40px; /* navbar 높이만큼 마진 위 조정 */
     padding: 0 24px;
 }
