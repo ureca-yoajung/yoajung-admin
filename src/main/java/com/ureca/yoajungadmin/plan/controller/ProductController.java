@@ -58,6 +58,12 @@ public class ProductController {
                 .ok(ApiResponse.of(PRODUCT_LIST_SUCCESS, productService.getProductList(pageNumber - 1, pageSize)));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse<ListProductResponse>> getAllProductList() {
+        return ResponseEntity
+                .ok(ApiResponse.of(PRODUCT_LIST_SUCCESS, productService.getAllProductList()));
+    }
+
     @PatchMapping("/{productId}")
     public ResponseEntity<ApiResponse<?>> editProduct(@PathVariable("productId") Long productId,
                                                       @RequestBody UpdateProductRequest updateProductRequest) {

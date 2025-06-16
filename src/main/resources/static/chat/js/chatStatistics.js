@@ -103,3 +103,20 @@ window.addEventListener('DOMContentLoaded', () => {
     setInterval(updateCurrentTime, 1000);
     fetchAndDraw();
 });
+function logout() {
+    fetch('/logout', {
+        method: 'POST',
+        credentials: 'include', // 세션/쿠키 포함
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: ''
+
+    })
+        .then(response => {
+            window.location.href = '/login.html';
+        })
+        .catch(error => {
+            console.error('로그아웃 실패:', error);
+        });
+}

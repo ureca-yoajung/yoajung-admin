@@ -9,6 +9,7 @@ public interface BenefitService {
     Long createBenefit(CreateBenefitRequest createBenefitRequest);
     BenefitResponse getBenefit(Long benefitId);
     ListBenefitResponse getBenefitList(Integer pageNumber, Integer pageSize);
+    ListBenefitResponse getAllBenefitList();
     void updateBenefit(Long benefitId, UpdateBenefitRequest updateBenefitRequest);
     void deleteBenefit(Long benefitId);
 }

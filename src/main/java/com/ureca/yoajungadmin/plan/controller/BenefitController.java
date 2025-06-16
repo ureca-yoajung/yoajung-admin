@@ -41,6 +41,13 @@ public class BenefitController {
                 ApiResponse.of(BENEFIT_LIST_SUCCESS, benefitService.getBenefitList(pageNumber - 1, pageSize)));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse<ListBenefitResponse>> getAllBenefitList() {
+        return ResponseEntity.ok(
+                ApiResponse.of(BENEFIT_LIST_SUCCESS, benefitService.getAllBenefitList())
+        );
+    }
+
     @GetMapping("/{benefitId}")
     public ResponseEntity<ApiResponse<BenefitResponse>> getBenefit(@PathVariable("benefitId") Long benefitId) {
         return ResponseEntity.ok(
