@@ -12,17 +12,22 @@
 <body>
 <nav class="admin-navbar">
   <div class="admin-navbar__container">
-    <div class="admin-navbar__logo">Admin</div>
+    <div class="admin-navbar__logo">YOAJUNG-ADMIN</div>
     <ul class="admin-navbar__menu">
       <li><a href="/plan/planList.html">요금제</a></li>
+      <li><a href="/plan/planStatistics.html">요금제 통계</a></li>
       <li><a href="/chat/chatStatistics.html">채팅 통계</a></li>
       <li><a href="/benefit/benefitList.html">혜택</a></li>
       <li><a href="/product/productList.html">상품</a></li>
       <li><a href="/reviews/reviewList.html">리뷰</a></li>
     </ul>
+    <div class="admin-navbar__right">
+      <button class="btn btn-primary" onclick="logout()">로그아웃</button>
+    </div>
   </div>
 </nav>
 
+<main class="container">
 <h1>리뷰 목록</h1>
 <div id="selected-plan-title"></div>
 
@@ -84,7 +89,7 @@
 
 <div class="pagination" id="pagination-buttons"></div>
 
-
+</main>
 <script src="/reviews/js/reviewList.js"></script>
 
 </body>
