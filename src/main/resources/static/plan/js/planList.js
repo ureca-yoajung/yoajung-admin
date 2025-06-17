@@ -209,14 +209,13 @@ function submitEditPlan() {
     });
 }
 function logout() {
-    fetch('/logout', {
+    fetch('/api/auth/logout', {
         method: 'POST',
         credentials: 'include', // 세션/쿠키 포함
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: ''
-
     })
         .then(response => {
             window.location.href = '/login.html';
