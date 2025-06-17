@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 회원가입</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f6fa;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            margin:0;
+        }
+        .login-container{
+            background:#fff;
+            padding:40px 30px;
+            border-radius:8px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.1);
+            width:320px;
+        }
+        .login-container h2{
+            margin-top:0;
+            margin-bottom:24px;
+            text-align:center;
+        }
+        label{
+            display:block;
+            margin-bottom:6px;
+            font-weight:600;
+        }
+        input,select,button{
+            width:100%;
+            padding:8px 10px;
+            margin-bottom:16px;
+            border:1px solid #ccc;
+            border-radius:4px;
+            box-sizing:border-box;
+            font-size:14px;
+        }
+        button{
+            background:#5562ff;
+            color:#fff;
+            cursor:pointer;
+            font-weight:600;
+            transition:background .2s ease;
+        }
+        button:hover{
+            background:#424ed4;
+        }
+        .error-message{color:#e03131;margin-bottom:8px;}
+        .success-message{color:#2f9e44;margin-bottom:8px;}
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h2>관리자 회원가입</h2>
+
+    <form id="signupForm">
+        <label>이름</label>
+        <input type="text" name="name" required />
+
+        <label>이메일</label>
+        <input type="email" name="email" required />
+
+        <label>비밀번호</label>
+        <input type="password" name="password" required minlength="8" />
+        <label>비밀번호 확인</label>
+        <input type="password" name="passwordConfirm" required minlength="8" />
+
+        <label>전화번호</label>
+        <input type="text" name="phoneNumber" placeholder="01012341234" required />
+
+        <label>성별</label>
+        <select name="gender">
+            <option value="MALE">남성</option>
+            <option value="FEMALE">여성</option>
+        </select>
+
+        <label>연령대</label>
+        <select name="ageGroup">
+            <option value="TEN_S">10대</option>
+            <option value="TWENTY_S">20대</option>
+            <option value="THIRTY_S">30대</option>
+            <!-- 필요 시 추가 -->
+        </select>
+
+
+        <button type="submit">회원가입</button>
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById('signupForm');
+    const errorDiv = document.getElementById('errorMessage');
+    const successDiv = document.getElementById('successMessage');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorDiv.textContent = '';
+        successDiv.textContent = '';
+
+        try {
+            const body = Object.fromEntries(new FormData(form));
+            if (body.password !== body.passwordConfirm) {
+              errorDiv.textContent = '비밀번호가 일치하지 않습니다.';
+              return;
+            }
+            delete body.passwordConfirm;    // 서버로 보내지 않음
+            const res = await fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+            });
+
+            const result = await res.json();
+            if (res.ok && result.code === 'SIGNUP_USER_201') {
+                successDiv.textContent = '회원가입이 완료되었습니다. 로그인 페이지로 이동합니다...';
+                setTimeout(() => location.href = '/login.html', 1500);
+            } else {
+                throw new Error(result.message || '회원가입에 실패했습니다.');
+            }
+        } catch (err) {
+            errorDiv.textContent = err.message;
+        }
+    });
+</script>
+</body>
+</html>
