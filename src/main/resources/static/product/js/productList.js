@@ -30,6 +30,22 @@ function renderTable(list) {
     const tbody = document.getElementById('productTableBody');
     tbody.innerHTML = '';
     list.forEach(p => {
+        let imgText;
+        if (p.productImage) {
+            if (typeof p.productImage === 'object') {
+                imgText = p.productImage.data ?? '';
+            } else {
+                try {
+                    const obj = JSON.parse(p.productImage);
+                    imgText = obj.data ?? '';
+                } catch {
+                    imgText = p.productImage;
+                }
+            }
+        } else {
+            imgText = '';
+        }
+
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${p.id}</td>
@@ -37,15 +53,16 @@ function renderTable(list) {
             <td>${p.productType}</td>
             <td>${p.productCategory}</td>
             <td>${p.description}</td>
-            <td>${p.productImage}</td>
+            <td>${imgText}</td>
             <td>
-                <button class="btn btn-delete" onclick="deleteProductImg(${p.id}, '${p.productImage}')">이미지 삭제</button>
+                <button class="btn btn-delete" onclick="deleteProductImg(${p.id}, '${imgText}')">이미지 삭제</button>
                 <button class="btn btn-primary" onclick="editProduct(${p.id})">수정</button>
-                <button class="btn btn-ghost" onclick="deleteProduct(${p.id}, '${p.productImage}')">삭제</button>
+                <button class="btn btn-ghost" onclick="deleteProduct(${p.id}, '${imgText}')">삭제</button>
             </td>`;
         tbody.appendChild(row);
     });
 }
+
 
 function renderPagination() {
     const container = document.getElementById('pagination');
@@ -159,10 +176,38 @@ function editProduct(id) {
         .then(res => res.json())
         .then(data => {
             const p = data.data;
+
+            // 1) 기존 p.productImage 에서 URL만 꺼내기
+            let raw = p.productImage;
+            let imageUrl = '';
+
+            if (raw) {
+                if (typeof raw === 'string') {
+                    // 문자열(JSON) 형태면 파싱
+                    try {
+                        const obj = JSON.parse(raw);
+                        imageUrl = obj.data || '';
+                    } catch {
+                        imageUrl = raw;
+                    }
+                } else if (raw.data) {
+                    // 이미 객체 형태면 바로
+                    imageUrl = raw.data;
+                }
+            }
+
+            // 2) input 값과 img 태그에 URL 세팅
+            document.getElementById('editProductImageUrl').value = imageUrl;
+            const imgEl = document.getElementById('editProductImage');
+            imgEl.src = imageUrl;
+
+            // (선택) 이미지가 잘려 보이지 않도록 스타일 보정
+            imgEl.style.maxWidth = '100%';
+            imgEl.style.height   = 'auto';
+
+            // 나머지 필드 세팅
             document.getElementById('editProductName').value = p.name;
             document.getElementById('editProductDescription').value = p.description;
-            document.getElementById('editProductImageUrl').value = p.productImage;
-            document.getElementById('editProductImage').src = p.productImage;
             loadEnums('editProductTypeSelect', '/products/enums/service-types');
             loadEnums('editProductCategorySelect', '/products/enums/service-categories');
             editingProductId = id;
@@ -173,6 +218,7 @@ function editProduct(id) {
             document.getElementById('editProductModal').style.display = 'flex';
         });
 }
+
 
 function closeEditProductModal() {
     document.getElementById('editProductModal').style.display = 'none';
