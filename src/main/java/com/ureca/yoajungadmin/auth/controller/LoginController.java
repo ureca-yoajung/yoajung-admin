@@ -1,23 +1,25 @@
 package com.ureca.yoajungadmin.auth.controller;
 
+import com.ureca.yoajungadmin.auth.dto.SignUpRequest;
+import com.ureca.yoajungadmin.auth.service.AuthService;
 import com.ureca.yoajungadmin.common.ApiResponse;
 import com.ureca.yoajungadmin.common.BaseCode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class LoginController {
-
+    private final AuthService authService;
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<Void>> logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);
@@ -39,5 +41,14 @@ public class LoginController {
         } else {
             return ResponseEntity.ok(ApiResponse.of(BaseCode.STATUS_UNAUTHORIZED, null));
         }
+    }
+
+    // 회원가입
+    @PostMapping("/signup")
+    public ResponseEntity<ApiResponse<Void>> signup(
+            @Valid @RequestBody SignUpRequest request) {
+
+        authService.signup(request);
+        return ResponseEntity.ok(ApiResponse.ok(BaseCode.USER_SIGNUP_SUCCESS));
     }
 }

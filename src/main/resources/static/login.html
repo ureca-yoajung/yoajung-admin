@@ -100,7 +100,7 @@
         if (res.headers.get("content-type")?.includes("application/json")) {
             const result = await res.json();
             if (result.code === 'STATUS_AUTHENTICATED_200') {
-                window.location.href = '/';
+                window.location.href = '/plan/planList.html';
             }
         }
       } catch (e) {
