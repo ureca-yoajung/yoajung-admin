@@ -26,7 +26,7 @@ body {
 
 .admin-navbar {
     background-color: #fff;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #e0e0e0;
     height: 64px;
 }
 
@@ -50,6 +50,8 @@ body {
     display: flex;
     gap: 20px;
     list-style: none;
+    margin: 0;
+    padding: 0;
     flex: 1;
 }
 
@@ -64,6 +66,7 @@ body {
     display: flex;
     align-items: center;
 }
+
 
 .container {
     max-width: 1800px;
