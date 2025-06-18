@@ -37,6 +37,14 @@ spring:
       stack:
         auto: false
 
+  ai:
+    openai:
+      api-key: "${OPENAI_API_KEY}"
+      chat:
+        options:
+          model: gpt-4o
+          temperature: 0.5
+
 logging:
   level:
     org.hibernate.SQL: debug             # 실행되는 SQL 로그
