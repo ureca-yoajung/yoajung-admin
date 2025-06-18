@@ -25,18 +25,33 @@
     </div>
 </nav>
 
-<main class="container">
-    <h1 class="page-title">요금제 연령대 통계</h1>
-    <div id="current-time" class="sub-text text-center"></div>
 
-    <div class="card">
-        <div class="card-body">
+<main class="container hidden" id="main-content">
+    <div class="header-row">
+        <h1 class="page-title">요금제 연령대 통계</h1>
+        <div id="current-time" class="time-label"></div>
+
+    </div>
+
+    <div class="card summary-card" id="summary-card">
+        <div class="card-header">
+            <span class="summary-title">AI 요약 설명</span>
+            <button class="close-btn" onclick="toggleSummaryContent()">▼</button>
+        </div>
+        <div class="card-body hidden" id="statistic-content"></div>
+    </div>
+
+    <div class="card graph-card">
+        <div class="card-header">
+            <span class="graph-title">연령대별 가입자 수 그래프</span>
+        </div>
+        <div class="card-body chart-wrapper">
             <canvas id="planChart"></canvas>
         </div>
     </div>
 </main>
 
-<script src="/plan/js/planStatistics.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/plan/js/planStatistics.js" defer></script>
 </body>
 </html>

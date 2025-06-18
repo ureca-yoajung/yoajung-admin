@@ -15,10 +15,15 @@
     box-sizing: border-box;
 }
 
+.hidden {
+    display: none;
+}
+
 body {
     font-family: 'Noto Sans KR', sans-serif;
     background: var(--bg-gray);
     color: var(--text-primary);
+    min-height: 100vh;
 }
 
 .admin-navbar {
@@ -84,53 +89,111 @@ body {
     background-color: var(--primary-dark);
 }
 
-.container {
+main.container {
     max-width: 1800px;
-    margin: 100px auto 40px;
-    padding: 0 24px;
+    margin: 40px auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .page-title {
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: 700;
-    margin-bottom: 16px;
-    text-align: center;
+    color: var(--text-primary);
 }
 
-.sub-text {
-    font-size: 14px;
+.time-label {
+    font-size: 0.875rem;
     color: var(--text-secondary);
-    margin-bottom: 32px;
-}
-
-.text-center {
-    text-align: center;
 }
 
 .card {
     background: var(--bg-white);
-    border-radius: 16px;
+    border-radius: 12px;
     box-shadow: var(--shadow);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .card-body {
     padding: 24px;
+    flex: 1;
+}
+
+.summary-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+#summary-card {
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+    max-height: 1000px; /* 충분한 높이로 지정 */
+    opacity: 1;
+    overflow: hidden;
+}
+
+#summary-card.hidden {
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
+    border: none;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: var(--primary);
+}
+
+#statistic-content.hidden {
+    display: none;
+}
+
+#statistic-content {
+    white-space: pre-wrap;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.graph-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.chart-wrapper {
+    position: relative;
+    width: 100%;
+    height: 400px;
 }
 
 canvas {
     width: 100% !important;
-    height: 450px !important;
-}
-
-@media (max-width: 768px) {
-    .admin-navbar__container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .admin-navbar__menu {
-        flex-wrap: wrap;
-        justify-content: flex-start;
-    }
+    height: 100% !important;
 }

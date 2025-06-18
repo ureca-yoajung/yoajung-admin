@@ -44,6 +44,8 @@ spring:
         options:
           model: gpt-4o
           temperature: 0.5
+    chat:
+      system-prompt1: classpath:prompt/agePrompt.txt
 
 logging:
   level:
