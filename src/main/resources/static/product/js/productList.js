@@ -116,8 +116,8 @@ function loadEnums(selectId, url) {
 
 function uploadProductImage(fileInputId, formKey, oldUrl, callback) {
     const fileInput = document.getElementById(fileInputId);
-
     const file = fileInput.files[0];
+
     const formData = new FormData();
     formData.append(formKey, file); // file -> @RequestPart
     if (oldUrl) {
@@ -132,18 +132,17 @@ function uploadProductImage(fileInputId, formKey, oldUrl, callback) {
             if (!response.ok) {
                 throw new Error(`서버 응답 오류: ${response.status}`);
             }
-            return response.text();
+            return response.json(); // JSON 응답으로 파싱
         })
-        .then(url => {
-            console.log("업로드 성공:", url);
-            if (callback) callback(url);
+        .then(json => {
+            const imageUrl = json.data; // data 필드만 추출
+            console.log("업로드 성공:", imageUrl);
+            if (callback) callback(imageUrl);
         })
         .catch(error => {
             console.error("업로드 실패:", error);
         });
 }
-
-
 
 function submitProduct() {
     uploadProductImage('file', 'file', null, function(url) {
@@ -169,6 +168,9 @@ function submitProduct() {
             }
         });
     });
+
+    const fileInput = document.getElementById('file');
+    fileInput.value = null;
 }
 
 function editProduct(id) {
@@ -217,6 +219,9 @@ function editProduct(id) {
             }, 100);
             document.getElementById('editProductModal').style.display = 'flex';
         });
+
+    const editFileInput = document.getElementById('editFile');
+    editFileInput.value = null;
 }
 
 
