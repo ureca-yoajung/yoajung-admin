@@ -524,3 +524,25 @@ h1 {
     font-weight: bold;
     color: #1f2937;
 }
+
+/* -------- AI Review Summary 카드 -------- */
+.plan-summary-card {
+    flex: 1;
+    min-width: 250px;
+    background: #fff;
+    padding: 1rem 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.plan-summary-card h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+.plan-summary-card p {
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-line;
+    color: var(--text-secondary);
+}

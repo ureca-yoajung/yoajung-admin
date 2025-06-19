@@ -30,6 +30,10 @@ public enum BaseCode {
     PLAN_DELETE_SUCCESS("DELETE_PLAN_200", HttpStatus.OK,   "요금제 삭제에 성공했습니다."),
     PLAN_STATISTICS_READ_SUCCESS("READ_PLAN_STATISTICS_200", HttpStatus.OK, "요금제 통계 조회에 성공했습니다."),
     PLAN_STATISTICS_NOT_FOUND("NOT_FOUND_PLAN_STATISTICS_404", HttpStatus.NOT_FOUND, "요금제 통계를 찾을 수 없습니다."),
+    PLAN_SUMMARY_SUCCESS("PLAN_SUMMARY_SUCCESS_200", HttpStatus.OK, "요금제 리뷰 요약 조회에 성공했습니다."),
+    PLAN_SUMMARY_NOT_FOUND("PLAN_SUMMARY_NOT_FOUND_204", HttpStatus.NO_CONTENT, "해당 요금제의 리뷰 요약이 없습니다."),
+    DIFY_SUMMARY_SUCCESS("DIFY_SUMMARY_SUCCESS_200", HttpStatus.OK,"요금제 요약에 성공했습니다."),
+
 
 
     // Review
