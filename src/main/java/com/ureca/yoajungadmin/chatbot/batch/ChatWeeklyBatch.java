@@ -2,7 +2,8 @@ package com.ureca.yoajungadmin.chatbot.batch;
 
 import com.ureca.yoajungadmin.chatbot.entity.ChatMemory;
 import com.ureca.yoajungadmin.chatbot.entity.ChatStatistic;
-import com.ureca.yoajungadmin.chatbot.repository.ChatMemoryRepository;
+import com.ureca.yoajungadmin.chatbot.entity.ChatType;
+import com.ureca.yoajungadmin.chatbot.repository.ChatHistoryRepository;
 import com.ureca.yoajungadmin.chatbot.repository.ChatStatisticRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -30,7 +31,7 @@ public class ChatWeeklyBatch {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager platformTransactionManager;
-    private final ChatMemoryRepository chatMemoryRepository;
+    private final ChatHistoryRepository chatHistoryRepository;
     private final ChatStatisticRepository chatStatisticRepository;
 
     @Bean
@@ -55,7 +56,7 @@ public class ChatWeeklyBatch {
             LocalDateTime start = oneWeekAgo.atStartOfDay();
             LocalDateTime end = today.plusDays(1).atStartOfDay();
 
-            long count = chatMemoryRepository.countByTypeAndTimestampBetween("USER", start, end);
+            long count = chatHistoryRepository.countByTypeAndTimestampBetween(ChatType.USER, start, end);
 
             ChatStatistic chatStatistic = ChatStatistic.builder()
                     .statDate(today)
@@ -91,7 +92,7 @@ public class ChatWeeklyBatch {
             LocalDateTime start = oneWeekAgo.atStartOfDay();
             LocalDateTime end = today.plusDays(1).atStartOfDay();
 
-            Set<String> set = chatMemoryRepository.findAllByTypeAndTimestampBetween("USER", start, end)
+            Set<String> set = chatHistoryRepository.findAllByTypeAndTimestampBetween(ChatType.USER, start, end)
                     .stream()
                     .map(ChatMemory::getConversationId)
                     .collect(Collectors.toSet());
