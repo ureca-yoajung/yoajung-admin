@@ -17,8 +17,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRep
               star,
               createDate,
               lastModifiedDate,
-              plan_id    AS planId,   -- alias for field mapping
-              user_id    AS userId,   -- alias for field mapping
+              planId    AS planId,   -- alias for field mapping
+              userId    AS userId,   -- alias for field mapping
               content
             FROM review
             WHERE plan_id = :planId

@@ -3,6 +3,7 @@ package com.ureca.yoajungadmin.summary.service;
 import com.ureca.yoajungadmin.plan.entity.Plan;
 import com.ureca.yoajungadmin.plan.repository.PlanRepository;
 import com.ureca.yoajungadmin.summary.client.DifyClient;
+import com.ureca.yoajungadmin.summary.dto.PlanSummaryDto;
 import com.ureca.yoajungadmin.summary.entity.PlanSummary;
 import com.ureca.yoajungadmin.summary.repository.PlanSummaryRepository;
 import jakarta.transaction.Transactional;
@@ -36,5 +37,15 @@ public class PlanSummaryServiceImpl implements PlanSummaryService{
                 .reviewCountSnapshot(reviews.split("\n").length) // 사용된 리뷰 줄 수
                 .build();
         summaryRepository.save(entity);
+    }
+
+    @Transactional
+    public PlanSummaryDto getSummary(Long planId) {
+        return summaryRepository.findById(planId)
+                .map(e -> new PlanSummaryDto(
+                        e.getPlanId(),
+                        e.getSummaryText(),
+                        e.getLastModifiedDate()))
+                .orElse(null);
     }
 }
