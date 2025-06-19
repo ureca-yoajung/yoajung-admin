@@ -1,6 +1,6 @@
 package com.ureca.yoajungadmin.chatbot.batch;
 
-import com.ureca.yoajungadmin.chatbot.entity.ChatMemory;
+import com.ureca.yoajungadmin.chatbot.entity.ChatHistory;
 import com.ureca.yoajungadmin.chatbot.entity.ChatStatistic;
 import com.ureca.yoajungadmin.chatbot.entity.ChatType;
 import com.ureca.yoajungadmin.chatbot.repository.ChatHistoryRepository;
@@ -94,7 +94,7 @@ public class ChatWeeklyBatch {
 
             Set<String> set = chatHistoryRepository.findAllByTypeAndTimestampBetween(ChatType.USER, start, end)
                     .stream()
-                    .map(ChatMemory::getConversationId)
+                    .map(ChatHistory::getConversationId)
                     .collect(Collectors.toSet());
 
             ChatStatistic chatStatistic = ChatStatistic.builder()
