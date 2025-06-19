@@ -9,6 +9,24 @@ document.addEventListener('DOMContentLoaded', () => {
     loadProducts(currentPage);
 });
 
+document.getElementById('run-plan-batch')
+    .addEventListener('click', async () => {
+            if (!confirm('요금제 배치 작업을 실행하시겠습니까?')) return;
+            try {
+                const resp = await fetch('/batch/plan/run', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                alert('요금제 배치 작업 완료');
+
+            } catch (e) {
+                console.error(e);
+                alert('요금제 배치 호출 중 오류 발생');
+            }
+
+        }
+    );
+
 function loadProducts(pageNumber) {
     if (totalPages > 0) {
         pageNumber = Math.max(1, Math.min(pageNumber, totalPages));
