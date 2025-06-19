@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loadReviews();
+    loadPlanSummary(currentPlanId);
     loadPlanOptionsToDropdown(); // 초기 로딩
 });
 
@@ -55,6 +56,7 @@ async function loadPlanOptionsToDropdown() {
                 currentPlanId = 'all';
                 document.getElementById('plan-options').style.display = 'none';
                 loadReviews(0);
+                loadPlanSummary(currentPlanId);
             });
             dropdown.appendChild(allItem);
             isAllOptionAdded = true;
@@ -70,6 +72,7 @@ async function loadPlanOptionsToDropdown() {
                 currentPlanId = plan.id;
                 dropdown.style.display = 'none';
                 loadReviews(0);
+                loadPlanSummary(currentPlanId);
             });
             dropdown.appendChild(item);
         });
@@ -164,7 +167,26 @@ async function deleteReview(reviewId) {
     }
 }
 
-
+// 요약 로드 함수
+async function loadPlanSummary(planId) {
+    if (!planId || planId === 'all') {
+        document.getElementById('plan-summary-card').style.display = 'none';
+        return;
+    }
+    try {
+        const res = await fetch(`/admin/plans/${planId}/summary`);
+        const result = await res.json();
+        if (result.status === 'OK' && result.data) {
+            document.getElementById('plan-summary-text').textContent = result.data.summaryText;
+            document.getElementById('plan-summary-card').style.display = 'block';
+        } else {
+            document.getElementById('plan-summary-card').style.display = 'none';
+        }
+    } catch (e) {
+        console.error('요약 로딩 실패', e);
+        document.getElementById('plan-summary-card').style.display = 'none';
+    }
+}
 
 // 리뷰 item
 function renderReview(review, template, container) {
