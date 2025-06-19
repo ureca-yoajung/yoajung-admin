@@ -67,7 +67,7 @@ body {
 
 .container {
     max-width: 1800px;
-    margin: 100px auto 40px;
+    margin: 40px auto 40px;
     padding: 0 24px;
 }
 
@@ -128,6 +128,7 @@ body {
     border-radius: 16px;
     box-shadow: var(--shadow);
     overflow: hidden;
+    margin-bottom: 24px;
 }
 
 .card-body {
@@ -178,4 +179,65 @@ canvas {
     .sub-tab-group {
         justify-content: flex-start;
     }
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.summary-text {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* 컨트롤 카드 */
+.controls-card {
+    margin-bottom: 24px;
+}
+
+.chart-controls {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.tab-btn,
+.sub-tab-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+}
+
+.tab-btn.active,
+.sub-tab-btn.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+/* 차트 카드 */
+.chart-card .chart-wrapper {
+    position: relative;
+    height: 450px;
+}
+
+.chart-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+
+/* 마지막 카드 아래 여백은 없애고 싶다면 (선택) */
+.card:last-child {
+    margin-bottom: 0;
 }

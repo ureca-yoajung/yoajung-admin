@@ -1,13 +1,10 @@
 package com.ureca.yoajungadmin.chatbot.service.response;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.List;
 
-@Getter
+@Getter @Setter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ChatStatisticsResponse {
@@ -17,4 +14,5 @@ public class ChatStatisticsResponse {
     private List<ChatStatDto> dailyMessageCounts;
     private List<ChatStatDto> weeklyMessageCounts;
     private List<ChatStatDto> monthlyMessageCounts;
+    private String content;
 }

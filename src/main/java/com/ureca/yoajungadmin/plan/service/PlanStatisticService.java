@@ -1,10 +1,9 @@
 package com.ureca.yoajungadmin.plan.service;
 
-import com.ureca.yoajungadmin.plan.service.response.PlanStatisticResponse;
-
-import java.util.List;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ureca.yoajungadmin.plan.service.response.PlanStatisticInfoResponse;
 
 public interface PlanStatisticService {
 
-    List<PlanStatisticResponse> getPlanStatistic();
+    PlanStatisticInfoResponse getPlanStatistic() throws JsonProcessingException;
 }

@@ -24,21 +24,27 @@
         </div>
     </div>
 </nav>
-
 <main class="container">
-    <h1 class="page-title">챗봇 통계</h1>
-    <div id="current-time" class="sub-text text-center"></div>
+    <div class="header-row">
+        <h1 class="page-title">챗봇 통계</h1>
+        <div id="current-time" class="time-label"></div>
+    </div>
+
+    <div class="card summary-card">
+        <div class="card-body">
+            <h2 class="section-title">AI 요약 설명</h2>
+            <p id="content-summary" class="summary-text"></p>
+        </div>
+    </div>
 
     <div class="card">
         <div class="card-body">
 
-            <!-- 버튼 영역 -->
             <div class="chart-controls">
                 <div class="tab-group">
-                    <button class="tab-btn active" data-tab="users">👤 사용자 수</button>
-                    <button class="tab-btn" data-tab="messages">💬 메시지 수</button>
+                    <button class="tab-btn active" data-type="users">👤 사용자 수</button>
+                    <button class="tab-btn" data-type="messages">💬 메시지 수</button>
                 </div>
-
                 <div class="sub-tab-group">
                     <button class="sub-tab-btn active" data-period="daily">일간</button>
                     <button class="sub-tab-btn" data-period="weekly">주간</button>
@@ -46,13 +52,13 @@
                 </div>
             </div>
 
-            <!-- 차트 영역 -->
-            <canvas id="mainChart"></canvas>
+            <div class="chart-wrapper">
+                <canvas id="mainChart"></canvas>
+            </div>
         </div>
     </div>
 </main>
-
-<script src="/chat/js/chatStatistics.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/chat/js/chatStatistics.js" defer></script>
 </body>
 </html>
