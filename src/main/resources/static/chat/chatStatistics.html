@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="/chat/css/chatStatistic.css" />
 </head>
 <body>
+<div id="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-message">통계 데이터 수집 중...</div>
+</div>
+
 <nav class="admin-navbar">
     <div class="admin-navbar__container">
         <div class="admin-navbar__logo">YOAJUNG-ADMIN</div>
@@ -24,7 +29,8 @@
         </div>
     </div>
 </nav>
-<main class="container">
+
+<main id="main-content" class="container">
     <div class="header-row">
         <h1 class="page-title">챗봇 통계</h1>
         <div id="current-time" class="time-label"></div>
