@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     updateCurrentTime();
+    setInterval(updateCurrentTime, 1000); // 1초마다 갱신
+
     fetchPlanStatistics();
 });
 

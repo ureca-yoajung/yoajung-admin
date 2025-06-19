@@ -77,7 +77,6 @@ public class PlanStatisticServiceImpl implements PlanStatisticService {
                 .call()
                 .content();
 
-        System.out.println(content);
 
         return new PlanStatisticInfoResponse(responses, content);
     }

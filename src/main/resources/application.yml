@@ -46,6 +46,7 @@ spring:
           temperature: 0.5
     chat:
       system-prompt1: classpath:prompt/agePrompt.txt
+      system-prompt2: classpath:prompt/chatPrompt.txt
 
 logging:
   level:

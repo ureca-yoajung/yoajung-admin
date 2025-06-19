@@ -1,5 +1,6 @@
 package com.ureca.yoajungadmin.chatbot.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ureca.yoajungadmin.chatbot.service.ChatStatisticService;
 import com.ureca.yoajungadmin.chatbot.service.response.ChatStatisticsResponse;
 import com.ureca.yoajungadmin.common.ApiResponse;
@@ -19,7 +20,7 @@ public class ChatStatisticsController {
     private final ChatStatisticService chatStatisticService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<ChatStatisticsResponse>> getChatStatistics() {
+    public ResponseEntity<ApiResponse<ChatStatisticsResponse>> getChatStatistics() throws JsonProcessingException {
         return ResponseEntity.ok(ApiResponse.of(CHAT_STATISTICS_READ_SUCCESS, chatStatisticService.getRecentStats()));
     }
 }

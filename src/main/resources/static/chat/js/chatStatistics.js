@@ -1,3 +1,6 @@
+// chatStatistics.js
+
+// 전역 변수
 let chartsData = {};
 let currentTab = 'users';
 let currentPeriod = 'daily';
@@ -17,8 +20,9 @@ const labelMap = {
 
 let chartInstance = null;
 
+// 차트 그리기 함수
 function renderChart(dataKey, label) {
-    const stats = chartsData[dataKey];
+    const stats = chartsData[dataKey] || [];
     const ctx = document.getElementById('mainChart').getContext('2d');
     if (chartInstance) chartInstance.destroy();
     chartInstance = new Chart(ctx, {
@@ -26,7 +30,7 @@ function renderChart(dataKey, label) {
         data: {
             labels: stats.map(x => x.statDate),
             datasets: [{
-                label: label,
+                label,
                 data: stats.map(x => x.value),
                 borderColor: '#e6007e',
                 backgroundColor: '#e6007e',
@@ -46,6 +50,7 @@ function renderChart(dataKey, label) {
     });
 }
 
+// 데이터 fetch 및 렌더링
 async function fetchAndDraw() {
     try {
         const res = await fetch('/chat-statistics');
@@ -53,17 +58,23 @@ async function fetchAndDraw() {
             alert(`HTTP 오류: ${res.status}`);
             return;
         }
-
         const json = await res.json();
+        const data = json.data;
+
+        const summaryEl = document.getElementById('content-summary');
+        if (summaryEl) {
+            summaryEl.innerHTML = json.data.content;
+        }
         chartsData = {
-            'users-daily': json.data.dailyActiveUsers,
-            'users-weekly': json.data.weeklyActiveUsers,
-            'users-monthly': json.data.monthlyActiveUsers,
-            'messages-daily': json.data.dailyMessageCounts,
-            'messages-weekly': json.data.weeklyMessageCounts,
-            'messages-monthly': json.data.monthlyMessageCounts
+            'users-daily': data.dailyActiveUsers,
+            'users-weekly': data.weeklyActiveUsers,
+            'users-monthly': data.monthlyActiveUsers,
+            'messages-daily': data.dailyMessageCounts,
+            'messages-weekly': data.weeklyMessageCounts,
+            'messages-monthly': data.monthlyMessageCounts
         };
 
+        // 초기 차트 그리기
         renderChart(`${currentTab}-${currentPeriod}`, labelMap[currentTab][currentPeriod]);
     } catch (err) {
         console.error(err);
@@ -71,52 +82,47 @@ async function fetchAndDraw() {
     }
 }
 
+// 탭 이벤트 바인딩
+function initTabs() {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentTab = btn.dataset.type;  // dataset.type 사용
+            renderChart(`${currentTab}-${currentPeriod}`, labelMap[currentTab][currentPeriod]);
+        });
+    });
+    document.querySelectorAll('.sub-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentPeriod = btn.dataset.period;
+            renderChart(`${currentTab}-${currentPeriod}`, labelMap[currentTab][currentPeriod]);
+        });
+    });
+}
+
+// 현재 시간 표시
 function updateCurrentTime() {
     const now = new Date();
     const formatted = now.toLocaleString('ko-KR', {
         year: 'numeric', month: '2-digit', day: '2-digit',
         hour: '2-digit', minute: '2-digit', second: '2-digit'
     });
-    document.getElementById('current-time').textContent = `📅 현재 시각: ${formatted}`;
+    document.getElementById('current-time').textContent = `현재 시각: ${formatted}`;
 }
 
-document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentTab = btn.dataset.tab;
-        renderChart(`${currentTab}-${currentPeriod}`, labelMap[currentTab][currentPeriod]);
-    });
-});
+// 로그아웃 처리
+function logout() {
+    fetch('/logout', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: '' })
+        .then(() => window.location.href = '/login.html')
+        .catch(err => console.error('로그아웃 실패:', err));
+}
 
-document.querySelectorAll('.sub-tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentPeriod = btn.dataset.period;
-        renderChart(`${currentTab}-${currentPeriod}`, labelMap[currentTab][currentPeriod]);
-    });
-});
-
+// 초기화
 window.addEventListener('DOMContentLoaded', () => {
     updateCurrentTime();
     setInterval(updateCurrentTime, 1000);
+    initTabs();
     fetchAndDraw();
 });
-function logout() {
-    fetch('/logout', {
-        method: 'POST',
-        credentials: 'include', // 세션/쿠키 포함
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: ''
-
-    })
-        .then(response => {
-            window.location.href = '/login.html';
-        })
-        .catch(error => {
-            console.error('로그아웃 실패:', error);
-        });
-}
