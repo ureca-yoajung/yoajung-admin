@@ -54,7 +54,7 @@ public class ChatWeeklyBatch {
             LocalDate oneWeekAgo = today.minusWeeks(1);
 
             LocalDateTime start = oneWeekAgo.atStartOfDay();
-            LocalDateTime end = today.plusDays(1).atStartOfDay();
+            LocalDateTime end = today.atStartOfDay();
 
             long count = chatHistoryRepository.countByTypeAndTimestampBetween(ChatType.USER, start, end);
 
@@ -90,7 +90,7 @@ public class ChatWeeklyBatch {
             LocalDate oneWeekAgo = today.minusWeeks(1);
 
             LocalDateTime start = oneWeekAgo.atStartOfDay();
-            LocalDateTime end = today.plusDays(1).atStartOfDay();
+            LocalDateTime end = today.atStartOfDay();
 
             Set<String> set = chatHistoryRepository.findAllByTypeAndTimestampBetween(ChatType.USER, start, end)
                     .stream()

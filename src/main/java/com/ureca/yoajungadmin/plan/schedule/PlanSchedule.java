@@ -18,7 +18,7 @@ public class PlanSchedule {
     private final JobLauncher jobLauncher;
     private final JobRegistry jobRegistry;
 
-//    @Scheduled(cron = "30 * * * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 5 0 * * SUN", zone = "Asia/Seoul")
     public void runPlan() throws Exception {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = dateFormat.format(new Date());

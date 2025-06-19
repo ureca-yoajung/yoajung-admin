@@ -58,7 +58,7 @@ public class ChatDailyBatch {
             long count = chatHistoryRepository.countByTypeAndTimestampBetween(ChatType.USER, start, end);
 
             ChatStatistic chatStatistic = ChatStatistic.builder()
-                    .statDate(statDate)
+                    .statDate(LocalDate.now())
                     .chatStatType(DAILY_CHAT_MESSAGE_COUNT)
                     .value(count)
                     .build();
@@ -97,7 +97,7 @@ public class ChatDailyBatch {
                 set.add(chatHistory.getConversationId());
 
             ChatStatistic chatStatistic = ChatStatistic.builder()
-                    .statDate(statDate)
+                    .statDate(LocalDate.now())
                     .chatStatType(DAILY_CHAT_ACTIVE_USER_COUNT)
                     .value((long) set.size())
                     .build();

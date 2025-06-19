@@ -53,7 +53,7 @@ public class ChatMonthlyBatch {
             LocalDate oneMonthAgo = today.minusMonths(1);
 
             LocalDateTime start = oneMonthAgo.atStartOfDay();
-            LocalDateTime end = today.plusDays(1).atStartOfDay();
+            LocalDateTime end = today.atStartOfDay();
 
             long count = chatHistoryRepository.countByTypeAndTimestampBetween(ChatType.USER, start, end);
 
@@ -89,7 +89,7 @@ public class ChatMonthlyBatch {
             LocalDate oneMonthAgo = today.minusMonths(1);
 
             LocalDateTime start = oneMonthAgo.atStartOfDay();
-            LocalDateTime end = today.plusDays(1).atStartOfDay();
+            LocalDateTime end = today.atStartOfDay();
 
             Set<String> set = chatHistoryRepository.findAllByTypeAndTimestampBetween(ChatType.USER, start, end)
                     .stream()
