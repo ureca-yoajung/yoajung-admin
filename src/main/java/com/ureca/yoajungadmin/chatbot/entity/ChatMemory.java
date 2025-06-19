@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "SPRING_AI_CHAT_MEMORY" )
+@Table(name = "SPRING_AI_CHAT_MEMORY")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatMemory {

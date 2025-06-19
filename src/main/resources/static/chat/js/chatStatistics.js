@@ -52,7 +52,12 @@ function renderChart(dataKey, label) {
 
 // 데이터 fetch 및 렌더링
 async function fetchAndDraw() {
+    const overlay = document.getElementById('loading-overlay');
+    const mainEl  = document.getElementById('main-content');
     try {
+        if (overlay) overlay.style.display = 'flex';
+        if (mainEl)  mainEl.style.display  = 'none';
+
         const res = await fetch('/chat-statistics');
         if (!res.ok) {
             alert(`HTTP 오류: ${res.status}`);
@@ -63,7 +68,13 @@ async function fetchAndDraw() {
 
         const summaryEl = document.getElementById('content-summary');
         if (summaryEl) {
-            summaryEl.innerHTML = json.data.content;
+            const html = json.data.content
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line)
+                .map(line => `<p>${line}</p>`)
+                .join('');
+            summaryEl.innerHTML = html;
         }
         chartsData = {
             'users-daily': data.dailyActiveUsers,
@@ -79,6 +90,9 @@ async function fetchAndDraw() {
     } catch (err) {
         console.error(err);
         alert(`데이터 불러오기 오류: ${err.message}`);
+    } finally {
+        if (overlay) overlay.style.display = 'none';
+        if (mainEl)  mainEl.style.display  = 'block';
     }
 }
 

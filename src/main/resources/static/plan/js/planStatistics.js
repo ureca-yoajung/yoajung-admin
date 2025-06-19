@@ -9,12 +9,25 @@ function fetchPlanStatistics() {
     fetch('/plan-statistics')
         .then(res => res.json())
         .then(json => {
+            const overlay = document.getElementById('loading-overlay');
+            const mainEl = document.getElementById('main-content');
+
+            if (overlay) overlay.style.display = 'flex';
+            if (mainEl) mainEl.classList.add('hidden');
+
             document.getElementById('summary-loading')?.classList.add('hidden');
             const contentEl = document.getElementById('statistic-content');
             if (contentEl) {
-                contentEl.textContent = json.data.content;
+                const html = json.data.content
+                    .split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line)
+                    .map(line => `<p>${line}</p>`)
+                    .join('');
+                contentEl.innerHTML = html;
                 contentEl.classList.remove('hidden');
             }
+
             const toggleBtn = document.querySelector('#summary-card .close-btn');
             if (toggleBtn) toggleBtn.textContent = '▲';
 
@@ -44,6 +57,9 @@ function fetchPlanStatistics() {
                     plugins: { legend: { display: true } }
                 }
             });
+
+            if (overlay) overlay.style.display = 'none';
+            if (mainEl) mainEl.classList.remove('hidden');
         });
 }
 
