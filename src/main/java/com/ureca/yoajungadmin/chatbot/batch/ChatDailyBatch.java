@@ -1,10 +1,9 @@
 package com.ureca.yoajungadmin.chatbot.batch;
 
-import com.ureca.yoajungadmin.chatbot.entity.ChatMemory;
+import com.ureca.yoajungadmin.chatbot.entity.ChatHistory;
 import com.ureca.yoajungadmin.chatbot.entity.ChatStatistic;
 import com.ureca.yoajungadmin.chatbot.entity.ChatType;
 import com.ureca.yoajungadmin.chatbot.repository.ChatHistoryRepository;
-import com.ureca.yoajungadmin.chatbot.repository.ChatMemoryRepository;
 import com.ureca.yoajungadmin.chatbot.repository.ChatStatisticRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -34,7 +33,6 @@ public class ChatDailyBatch {
     private final JobRepository jobRepository;
     private final PlatformTransactionManager platformTransactionManager;
     private final ChatHistoryRepository chatHistoryRepository;
-    private final ChatMemoryRepository chatMemoryRepository;
     private final ChatStatisticRepository chatStatisticRepository;
 
     @Bean
@@ -91,12 +89,12 @@ public class ChatDailyBatch {
             LocalDateTime start = statDate.atStartOfDay();
             LocalDateTime end = start.plusDays(1);
 
-            List<ChatMemory> chatMemoryList = chatHistoryRepository.findAllByTypeAndTimestampBetween(ChatType.USER, start, end);
+            List<ChatHistory> chatMemoryList = chatHistoryRepository.findAllByTypeAndTimestampBetween(ChatType.USER, start, end);
 
             Set<String> set = new HashSet<>();
 
-            for (ChatMemory chatMemory : chatMemoryList)
-                set.add(chatMemory.getConversationId());
+            for (ChatHistory chatHistory : chatMemoryList)
+                set.add(chatHistory.getConversationId());
 
             ChatStatistic chatStatistic = ChatStatistic.builder()
                     .statDate(statDate)
