@@ -24,7 +24,7 @@ public class SecurityConfig {
               // 로그아웃, 상태조회 API 공개
               .requestMatchers("/api/auth/logout", "/api/auth/status").permitAll()
               // 그 외 API(로그인 처리 포함)는 인증된 사용자만
-              .anyRequest().permitAll()
+              .anyRequest().authenticated()
           )
           .formLogin(form -> form
               .loginPage("/login.html")
