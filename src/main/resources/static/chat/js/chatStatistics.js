@@ -5,6 +5,42 @@ let chartsData = {};
 let currentTab = 'users';
 let currentPeriod = 'daily';
 
+document.getElementById('run-plan-batch')
+    .addEventListener('click', async () => {
+            if (!confirm('요금제 배치 작업을 실행하시겠습니까?')) return;
+            try {
+                const resp = await fetch('/batch/plan/run', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                alert('요금제 배치 작업 완료');
+
+            } catch (e) {
+                console.error(e);
+                alert('요금제 배치 호출 중 오류 발생');
+            }
+
+        }
+    );
+
+document.getElementById('run-chat-batch')
+    .addEventListener('click', async () => {
+            if (!confirm('채팅 배치 작업을 실행하시겠습니까?')) return;
+            try {
+                const resp = await fetch('/batch/chat-bot/run', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                alert('채팅 배치 작업 완료');
+
+            } catch (e) {
+                console.error(e);
+                alert('채팅 배치 호출 중 오류 발생');
+            }
+
+        }
+    );
+
 const labelMap = {
     users: {
         daily: '일간 활성 사용자 수',

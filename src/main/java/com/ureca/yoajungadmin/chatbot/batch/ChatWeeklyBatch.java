@@ -50,11 +50,15 @@ public class ChatWeeklyBatch {
 
     private Tasklet weeklyMessageCountTasklet() {
         return (contribution, chunkContext) -> {
-            LocalDate today = LocalDate.now();
+            var params    = chunkContext.getStepContext()
+                    .getStepExecution()
+                    .getJobParameters();
+            String dateParam = params.getString("date");
+            LocalDate today = LocalDate.parse(dateParam);
             LocalDate oneWeekAgo = today.minusWeeks(1);
 
             LocalDateTime start = oneWeekAgo.atStartOfDay();
-            LocalDateTime end = today.plusDays(1).atStartOfDay();
+            LocalDateTime end = today.atStartOfDay();
 
             long count = chatHistoryRepository.countByTypeAndTimestampBetween(ChatType.USER, start, end);
 
@@ -86,11 +90,15 @@ public class ChatWeeklyBatch {
 
     private Tasklet weeklyMessageUserCountTasklet() {
         return (contribution, chunkContext) -> {
-            LocalDate today = LocalDate.now();
+            var params    = chunkContext.getStepContext()
+                    .getStepExecution()
+                    .getJobParameters();
+            String dateParam = params.getString("date");
+            LocalDate today = LocalDate.parse(dateParam);
             LocalDate oneWeekAgo = today.minusWeeks(1);
 
             LocalDateTime start = oneWeekAgo.atStartOfDay();
-            LocalDateTime end = today.plusDays(1).atStartOfDay();
+            LocalDateTime end = today.atStartOfDay();
 
             Set<String> set = chatHistoryRepository.findAllByTypeAndTimestampBetween(ChatType.USER, start, end)
                     .stream()

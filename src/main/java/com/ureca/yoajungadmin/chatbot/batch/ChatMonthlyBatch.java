@@ -49,11 +49,18 @@ public class ChatMonthlyBatch {
 
     private Tasklet monthlyMessageCountTasklet() {
         return (contribution, chunkContext) -> {
-            LocalDate today = LocalDate.now();
+            var params    = chunkContext.getStepContext()
+                    .getStepExecution()
+                    .getJobParameters();
+            String dateParam = params.getString("date");
+            LocalDate statDate = LocalDate.parse(dateParam);
+
+//            LocalDate today = LocalDate.now();
+            LocalDate today = LocalDate.parse(dateParam);
             LocalDate oneMonthAgo = today.minusMonths(1);
 
             LocalDateTime start = oneMonthAgo.atStartOfDay();
-            LocalDateTime end = today.plusDays(1).atStartOfDay();
+            LocalDateTime end = today.atStartOfDay();
 
             long count = chatHistoryRepository.countByTypeAndTimestampBetween(ChatType.USER, start, end);
 
@@ -85,11 +92,18 @@ public class ChatMonthlyBatch {
 
     private Tasklet monthlyMessageUserCountTasklet() {
         return (contribution, chunkContext) -> {
-            LocalDate today = LocalDate.now();
+            var params    = chunkContext.getStepContext()
+                    .getStepExecution()
+                    .getJobParameters();
+            String dateParam = params.getString("date");
+            LocalDate statDate = LocalDate.parse(dateParam);
+
+//            LocalDate today = LocalDate.now();
+            LocalDate today = LocalDate.parse(dateParam);
             LocalDate oneMonthAgo = today.minusMonths(1);
 
             LocalDateTime start = oneMonthAgo.atStartOfDay();
-            LocalDateTime end = today.plusDays(1).atStartOfDay();
+            LocalDateTime end = today.atStartOfDay();
 
             Set<String> set = chatHistoryRepository.findAllByTypeAndTimestampBetween(ChatType.USER, start, end)
                     .stream()
