@@ -51,14 +51,19 @@ public class ChatDailyBatch {
 
     private Tasklet dailyMessageCountTasklet() {
         return (contribution, chunkContext) -> {
-            LocalDate statDate = LocalDate.now().minusDays(1);
+            var params    = chunkContext.getStepContext()
+                    .getStepExecution()
+                    .getJobParameters();
+            LocalDate statDate = LocalDate.parse(params.getString("date"));
+
+//            LocalDate statDate = LocalDate.now().minusDays(1);
             LocalDateTime start = statDate.atStartOfDay();
             LocalDateTime end = start.plusDays(1);
 
             long count = chatHistoryRepository.countByTypeAndTimestampBetween(ChatType.USER, start, end);
 
             ChatStatistic chatStatistic = ChatStatistic.builder()
-                    .statDate(LocalDate.now())
+                    .statDate(statDate.plusDays(1))
                     .chatStatType(DAILY_CHAT_MESSAGE_COUNT)
                     .value(count)
                     .build();
@@ -85,7 +90,12 @@ public class ChatDailyBatch {
 
     private Tasklet dailyMessageUserCountTasklet() {
         return (contribution, chunkContext) -> {
-            LocalDate statDate = LocalDate.now().minusDays(1);
+            var params    = chunkContext.getStepContext()
+                    .getStepExecution()
+                    .getJobParameters();
+            LocalDate statDate = LocalDate.parse(params.getString("date"));
+
+//            LocalDate statDate = LocalDate.now().minusDays(1);
             LocalDateTime start = statDate.atStartOfDay();
             LocalDateTime end = start.plusDays(1);
 
@@ -97,7 +107,7 @@ public class ChatDailyBatch {
                 set.add(chatHistory.getConversationId());
 
             ChatStatistic chatStatistic = ChatStatistic.builder()
-                    .statDate(LocalDate.now())
+                    .statDate(statDate.plusDays(1))
                     .chatStatType(DAILY_CHAT_ACTIVE_USER_COUNT)
                     .value((long) set.size())
                     .build();

@@ -50,7 +50,11 @@ public class ChatWeeklyBatch {
 
     private Tasklet weeklyMessageCountTasklet() {
         return (contribution, chunkContext) -> {
-            LocalDate today = LocalDate.now();
+            var params    = chunkContext.getStepContext()
+                    .getStepExecution()
+                    .getJobParameters();
+            String dateParam = params.getString("date");
+            LocalDate today = LocalDate.parse(dateParam);
             LocalDate oneWeekAgo = today.minusWeeks(1);
 
             LocalDateTime start = oneWeekAgo.atStartOfDay();
@@ -86,7 +90,11 @@ public class ChatWeeklyBatch {
 
     private Tasklet weeklyMessageUserCountTasklet() {
         return (contribution, chunkContext) -> {
-            LocalDate today = LocalDate.now();
+            var params    = chunkContext.getStepContext()
+                    .getStepExecution()
+                    .getJobParameters();
+            String dateParam = params.getString("date");
+            LocalDate today = LocalDate.parse(dateParam);
             LocalDate oneWeekAgo = today.minusWeeks(1);
 
             LocalDateTime start = oneWeekAgo.atStartOfDay();
