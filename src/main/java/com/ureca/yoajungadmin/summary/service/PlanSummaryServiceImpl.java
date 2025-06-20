@@ -24,7 +24,8 @@ public class PlanSummaryServiceImpl implements PlanSummaryService{
         Plan plan = planRepository.findById(planId)
                 .orElseThrow(() -> new IllegalArgumentException("Plan not found"));
 
-        String planInfo = String.format("이름:%s, 가격:%d원, 데이터:%dGB", plan.getName(), plan.getBasePrice(), plan.getDataAllowance());
+        String dataText = (plan.getDataAllowance() == 9999) ? "무제한" : plan.getDataAllowance() + "GB";
+        String planInfo = String.format("이름:%s, 가격:%d원, 데이터:%s", plan.getName(), plan.getBasePrice(), dataText);
         String reviews = samplingService.sampleLatestThirty(planId);
         String summary = difyClient.requestSummary(planInfo, reviews);
         if (summary == null || summary.isBlank()) {
