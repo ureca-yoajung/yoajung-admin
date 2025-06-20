@@ -10,9 +10,12 @@ let isAllOptionAdded = false; // "전체 보기" 중복 생성 방지용
 let dropdownPlanPage = 1;
 let totalLoadedPlans = 0; // 누적 로딩 수
 
+const rebuildBtn = document.getElementById('rebuild-summary-btn');
+
 document.addEventListener('DOMContentLoaded', () => {
     const selected = document.getElementById('selected-plan');
     const dropdown = document.getElementById('plan-options');
+    rebuildBtn.addEventListener('click', handleRebuildSummary);
 
     selected.addEventListener('click', () => {
         dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
@@ -89,6 +92,7 @@ async function loadPlanOptionsToDropdown() {
             allItem.addEventListener('click', () => {
                 document.getElementById('selected-plan').textContent = '전체 보기';
                 currentPlanId = 'all';
+                updateRebuildButtonVisibility();
                 document.getElementById('plan-options').style.display = 'none';
                 loadReviews(0);
                 loadPlanSummary(currentPlanId);
@@ -105,6 +109,7 @@ async function loadPlanOptionsToDropdown() {
             item.addEventListener('click', () => {
                 document.getElementById('selected-plan').textContent = plan.name;
                 currentPlanId = plan.id;
+                updateRebuildButtonVisibility();
                 dropdown.style.display = 'none';
                 loadReviews(0);
                 loadPlanSummary(currentPlanId);
@@ -275,14 +280,64 @@ function renderPaginationButtons(totalPages, currentPage) {
     const paginationContainer = document.getElementById('pagination-buttons');
     paginationContainer.innerHTML = '';
 
-    for (let i = 0; i < totalPages; i++) {
+    if (totalPages === 0) return;
+
+    const groupSize = 5;
+    const currentGroupStart = Math.floor(currentPage / groupSize) * groupSize;
+
+    // ← 이전 그룹 버튼
+    if (currentGroupStart > 0) {
+        const prevBtn = document.createElement('button');
+        prevBtn.textContent = '← 이전';
+        prevBtn.classList.add('page-nav');
+        prevBtn.addEventListener('click', () => loadReviews(currentGroupStart - 1));
+        paginationContainer.appendChild(prevBtn);
+    }
+
+    // 현재 그룹의 페이지 버튼 (5개까지)
+    const groupEnd = Math.min(currentGroupStart + groupSize, totalPages);
+    for (let i = currentGroupStart; i < groupEnd; i++) {
         const btn = document.createElement('button');
         btn.textContent = i + 1;
         btn.classList.add('page-btn');
         if (i === currentPage) btn.classList.add('active');
-
         btn.disabled = i === currentPage;
         btn.addEventListener('click', () => loadReviews(i));
         paginationContainer.appendChild(btn);
     }
+
+    // 다음 → 그룹 버튼
+    if (groupEnd < totalPages) {
+        const nextBtn = document.createElement('button');
+        nextBtn.textContent = '다음 →';
+        nextBtn.classList.add('page-nav');
+        nextBtn.addEventListener('click', () => loadReviews(groupEnd));
+        paginationContainer.appendChild(nextBtn);
+    }
+}
+
+async function handleRebuildSummary() {
+    if (currentPlanId === 'all') return;
+    if (!confirm('선택한 요금제의 AI 요약을 다시 생성하시겠습니까?')) return;
+
+    try {
+        const resp = await fetch(`/admin/plans/${currentPlanId}/summary/rebuild`, {
+            method: 'POST',
+            credentials: 'include'
+        });
+        const result = await resp.json();
+        if (resp.ok && result.status === 'OK') {
+            alert('요약이 재생성되었습니다.');
+            loadPlanSummary(currentPlanId);   // 최신 요약 다시 표시
+        } else {
+            alert(result.message || '요약 재생성 실패');
+        }
+    } catch (err) {
+        console.error(err);
+        alert('요약 재생성 중 오류가 발생했습니다.');
+    }
+}
+
+function updateRebuildButtonVisibility() {
+    rebuildBtn.style.display = currentPlanId === 'all' ? 'none' : 'inline-block';
 }
