@@ -87,7 +87,7 @@ public class ChatStatisticServiceImpl implements ChatStatisticService {
                         ChatStatistic::getValue
                 ));
 
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now().minusDays(1);
         LocalDate baseSunday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
         LocalDate firstOfMonth = today.withDayOfMonth(1);
 
