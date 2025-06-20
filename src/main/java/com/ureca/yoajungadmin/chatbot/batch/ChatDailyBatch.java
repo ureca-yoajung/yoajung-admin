@@ -54,9 +54,8 @@ public class ChatDailyBatch {
             var params    = chunkContext.getStepContext()
                     .getStepExecution()
                     .getJobParameters();
-            LocalDate statDate = LocalDate.parse(params.getString("date"));
+            LocalDate statDate = LocalDate.parse(params.getString("date")).minusDays(1);
 
-//            LocalDate statDate = LocalDate.now().minusDays(1);
             LocalDateTime start = statDate.atStartOfDay();
             LocalDateTime end = start.plusDays(1);
 
@@ -93,7 +92,7 @@ public class ChatDailyBatch {
             var params    = chunkContext.getStepContext()
                     .getStepExecution()
                     .getJobParameters();
-            LocalDate statDate = LocalDate.parse(params.getString("date"));
+            LocalDate statDate = LocalDate.parse(params.getString("date")).minusDays(1);
 
 //            LocalDate statDate = LocalDate.now().minusDays(1);
             LocalDateTime start = statDate.atStartOfDay();
