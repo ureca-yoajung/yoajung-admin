@@ -21,7 +21,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRep
               userId    AS userId,   -- alias for field mapping
               content
             FROM review
-            WHERE plan_id = :planId
+            WHERE planId = :planId
               AND isDeleted = false
             ORDER BY createDate DESC
             LIMIT 30

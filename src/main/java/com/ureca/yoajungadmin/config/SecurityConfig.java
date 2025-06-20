@@ -20,9 +20,9 @@ public class SecurityConfig {
           .csrf(csrf -> csrf.disable())
           .authorizeHttpRequests(auth -> auth
               // 로그인 페이지 & 정적 자산만 공개
-              .requestMatchers("/login.html", "/css/**", "/js/**", "/images/**").permitAll()
+              .requestMatchers("/login.html", "/signup.html","/css/**", "/js/**", "/images/**").permitAll()
               // 로그아웃, 상태조회 API 공개
-              .requestMatchers("/api/auth/logout", "/api/auth/status").permitAll()
+                  .requestMatchers("/api/auth/logout", "/api/auth/status", "/api/auth/signup").permitAll()
               // 그 외 API(로그인 처리 포함)는 인증된 사용자만
               .anyRequest().authenticated()
           )

@@ -466,6 +466,9 @@ h1 {
 }
 .top-actions {
     margin: 2rem 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;           /* spacing between dropdown and button */
 }
 .review-header .user-info {
     flex-direction: column;
@@ -545,4 +548,13 @@ h1 {
     line-height: 1.5;
     white-space: pre-line;
     color: var(--text-secondary);
+}
+
+.page-nav {
+    padding: 8px 12px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
 }
