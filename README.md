@@ -5,6 +5,7 @@
 - 사용자의 요금제 이용 현황 및 챗봇 통계 데이터를 열람할 수 있으며, 수집된 리뷰를 요약해주는 기능도 제공합니다.
 
 ## 아키텍처
+![architecture](https://github.com/user-attachments/assets/a6df5444-141e-4ceb-9e9c-698a8d48ebf0)
 
 ## 팀원 소개
 | 이름  | 역할      | 주요 구현 내용                          | GitHub                                             |
