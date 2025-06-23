@@ -29,5 +29,5 @@
 ### 요금제
 | 설명 | 이미지 |
 |------|--------|
-| 등록된 요금제를 조회  | <img src="https://github.com/user-attachments/assets/01b07076-5b0c-4eed-af66-4a85af62f920" width="800"/> |
-| 새로운 요금제를 등록 | <img src="https://github.com/user-attachments/assets/cd6dd71a-be4f-4ae2-807e-e3797e3992c3" width="800"/> |
+| 요금제 조회  | <img src="https://github.com/user-attachments/assets/01b07076-5b0c-4eed-af66-4a85af62f920" width="800"/> |
+| 요금제 등록 | <img src="https://github.com/user-attachments/assets/cd6dd71a-be4f-4ae2-807e-e3797e3992c3" width="800"/> |
