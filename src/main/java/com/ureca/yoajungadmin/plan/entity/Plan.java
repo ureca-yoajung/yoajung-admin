@@ -4,6 +4,7 @@ package com.ureca.yoajungadmin.plan.entity;
 import com.ureca.yoajungadmin.common.BaseTimeEntity;
 import com.ureca.yoajungadmin.plan.entity.enums.NetworkType;
 import com.ureca.yoajungadmin.plan.entity.enums.PlanCategory;
+import com.ureca.yoajungadmin.plan.entity.enums.PlanTarget;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -35,6 +36,10 @@ public class Plan extends BaseTimeEntity {
     @Column(name="networkType", nullable = false)
     @Enumerated(EnumType.STRING)
     private NetworkType networkType;
+
+    @Column(name = "planTarget", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PlanTarget planTarget;
 
     @Column(name="planCategory", nullable = false)
     @Enumerated(EnumType.STRING)
