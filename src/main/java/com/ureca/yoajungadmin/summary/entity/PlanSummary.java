@@ -18,7 +18,7 @@ public class PlanSummary extends BaseTimeEntity {
     private Long planId; // 1:1 매핑
 
     @Lob
-    @Column(name = "summaryText", nullable = false)
+    @Column(name = "summaryText", nullable = false, columnDefinition = "TEXT")
     private String summaryText;
 
     @Column(name = "reviewCountSnapshot", nullable = false)
