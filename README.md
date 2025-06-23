@@ -4,9 +4,6 @@
 - 요아정 관리자 시스템은 서비스 운영자가 요금제, 상품, 혜택, 사용자 리뷰 등의 데이터를 손쉽게 관리할 수 있도록 설계된 백오피스 서버입니다. 
 - 사용자의 요금제 이용 현황 및 챗봇 통계 데이터를 열람할 수 있으며, 수집된 리뷰를 요약해주는 기능도 제공합니다.
 
-## 아키텍처
-![architecture](https://github.com/user-attachments/assets/a6df5444-141e-4ceb-9e9c-698a8d48ebf0)
-
 ## 팀원 소개
 | 이름  | 역할      | 주요 구현 내용                          | GitHub                                             |
 |-----|---------|-----------------------------------|----------------------------------------------------|
@@ -14,6 +11,18 @@
 | 박소연 | 백엔드     | 리뷰 비즈니스 로직 구현                     | <a href="https://github.com/so-yeon1"><img src="https://avatars.githubusercontent.com/u/82212460?v=4" width="100" height="100" alt="so-yeon1" /></a>        |
 | 신혜원 | 백엔드     | 이미지 관리 기능                         | <a href="https://github.com/hyew0nn"><img src="https://avatars.githubusercontent.com/u/113279618?v=4" width="100" height="100" alt="hyew0nn" /></a>               |
 | 홍석준 | 백엔드, AI | 인증/인가, 리뷰 요약                      | <a href="https://github.com/seokjuun"><img src="https://avatars.githubusercontent.com/u/45346977?v=4" width="100" height="100" alt="seokjuun" /></a>               |
+
+## 기술 스택
+| 분류         | 기술                                                  |
+|--------------|-------------------------------------------------------|
+| Language     | Java 17                                               |
+| Framework    | Spring Boot, Spring Batch, Spring Security, Spring AI |
+| Database     | MySQL                                                 |
+| ORM          | JPA                                                   |
+| Infra        | Kubernetes, Docker                                    |
+
+## 아키텍처
+![architecture](https://github.com/user-attachments/assets/a6df5444-141e-4ceb-9e9c-698a8d48ebf0)
 
 ## 주요 기능
 | 기능 | 설명 |
