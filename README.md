@@ -12,15 +12,6 @@
 | 신혜원 | 백엔드     | 이미지 관리 기능                         | <a href="https://github.com/hyew0nn"><img src="https://avatars.githubusercontent.com/u/113279618?v=4" width="100" height="100" alt="hyew0nn" /></a>               |
 | 홍석준 | 백엔드, AI | 인증/인가, 리뷰 요약                      | <a href="https://github.com/seokjuun"><img src="https://avatars.githubusercontent.com/u/45346977?v=4" width="100" height="100" alt="seokjuun" /></a>               |
 
-## 기술 스택
-| 분류         | 기술                                                  |
-|--------------|-------------------------------------------------------|
-| Language     | Java 17                                               |
-| Framework    | Spring Boot, Spring Batch, Spring Security, Spring AI |
-| Database     | MySQL                                                 |
-| ORM          | JPA                                                   |
-| Infra        | Kubernetes, Docker                                    |
-
 ## 아키텍처
 ![architecture](https://github.com/user-attachments/assets/a6df5444-141e-4ceb-9e9c-698a8d48ebf0)
 
