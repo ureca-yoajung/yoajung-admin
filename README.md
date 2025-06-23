@@ -29,5 +29,12 @@
 ### 요금제
 | 설명 | 이미지 |
 |------|--------|
-| 요금제 조회  | <img src="https://github.com/user-attachments/assets/01b07076-5b0c-4eed-af66-4a85af62f920" width="800"/> |
-| 요금제 등록 | <img src="https://github.com/user-attachments/assets/cd6dd71a-be4f-4ae2-807e-e3797e3992c3" width="800"/> |
+| 요금제 조회  | <img src="https://github.com/user-attachments/assets/01b07076-5b0c-4eed-af66-4a85af62f920" width="600"/> |
+| 요금제 등록 | <img src="https://github.com/user-attachments/assets/cd6dd71a-be4f-4ae2-807e-e3797e3992c3" width="600"/> |
+
+### 통계
+| 설명 | 이미지 |
+|------|--------|
+| 연령별 통계  | <img src="https://github.com/user-attachments/assets/3400a5c0-12b8-4e34-8306-b7907fb2516f" width="600"/> |
+| 챗봇 통계 | <img src="https://github.com/user-attachments/assets/f42de7a5-7844-4323-91e1-e07225c4a4f7" width="600"/> |
+
